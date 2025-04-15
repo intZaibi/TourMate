@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+#UNDER_DEVELOPMENT
 
-## Getting Started
+# Tourmate - AI-Powered Travel Recommendation Platform
 
-First, run the development server:
+![Tourmate Logo](https://via.placeholder.com/150x50?text=Tourmate) <!-- Replace with actual logo -->
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Tourmate is a web-based AI-driven platform that provides personalized travel recommendations based on user preferences, offering destination suggestions, cost estimations, and interactive trip planning.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+✨ **Personalized Recommendations**  
+- AI-curated destinations, activities, and accommodations  
+- Tailored to your budget, interests, and travel style  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+💰 **Cost Estimation**  
+- Real-time budget calculations  
+- Price breakdowns for flights, stays, and activities  
 
-## Learn More
+🗺 **Interactive Maps**  
+- Visual destination exploration  
+- Route planning and location markers  
 
-To learn more about Next.js, take a look at the following resources:
+📸 **Visual Inspiration**  
+- Stunning destination images  
+- Activity and cuisine galleries  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+📊 **Trip Management**  
+- Save and organize favorite trips  
+- Share itineraries with friends  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+**Frontend**:
+- React.js (with TypeScript)
+- Map library (Leaflet/Google Maps)
+- UI Framework (Material-UI/Tailwind CSS)
+- State Management (Redux/Zustand)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Backend**:
+- Node.js with Express
+- MongoDB (Mongoose ODM)
+- OpenAI API integration
+- JWT Authentication
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**DevOps**:
+- Vercel/Netlify (Frontend Deployment)
+- Heroku/Render (Backend Deployment)
+- MongoDB Atlas (Cloud Database)
+
+## Project Structure
