@@ -1,0 +1,41 @@
+{
+  "name": "tour_mate",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@hookform/resolvers": "^5.0.1",
+    "@mui/icons-material": "^7.0.1",
+    "@mui/material": "^7.0.1",
+    "@radix-ui/react-tabs": "^1.1.3",
+    "@tanstack/react-query": "^5.71.10",
+    "@tanstack/react-query-devtools": "^5.74.3",
+    "@toolpad/core": "^0.14.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.487.0",
+    "mongoose": "^8.13.2",
+    "next": "15.2.4",
+    "openai": "^4.91.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.55.0",
+    "react-hot-toast": "^2.5.2",
+    "tailwind-merge": "^3.2.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
