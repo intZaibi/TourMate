@@ -373,8 +373,7 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/components/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 
 // MUI components
@@ -395,26 +394,7 @@ import {
   Paper,
 } from '@mui/material';
 import { Globe, LogIn, User, UserPlus } from 'lucide-react';
-
-const loginSchema = z.object({
-  username: z.string().min(3, 'Username must be at least 3 characters'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
-
-const registerSchema = z
-  .object({
-    username: z.string().min(3, 'Username must be at least 3 characters'),
-    email: z.string().email('Please enter a valid email'),
-    password: z.string().min(6, 'Password must be at least 6 characters'),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
-  });
-
-type LoginFormValues = z.infer<typeof loginSchema>;
-type RegisterFormValues = z.infer<typeof registerSchema>;
+import { SignInInterface, SignUpInterface, UsersSignIn, UsersSignUp } from '@/interfaces/UsersSchema';
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -425,16 +405,16 @@ export default function AuthPage() {
     if (user) router.push('/');
   }, [user]);
 
-  const loginForm = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  const loginForm = useForm<SignInInterface>({
+    resolver: zodResolver(UsersSignIn),
     defaultValues: {
-      username: '',
+      email: '',
       password: '',
     },
   });
 
-  const registerForm = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
+  const registerForm = useForm<SignUpInterface>({
+    resolver: zodResolver(UsersSignUp),
     defaultValues: {
       username: '',
       email: '',
@@ -443,11 +423,11 @@ export default function AuthPage() {
     },
   });
 
-  const onLoginSubmit = (values: LoginFormValues) => {
+  const onLoginSubmit = (values: SignInInterface) => {
     loginMutation.mutate(values);
   };
 
-  const onRegisterSubmit = (values: RegisterFormValues) => {
+  const onRegisterSubmit = (values: Omit<SignUpInterface, "confirmPassword">) => {
     registerMutation.mutate({
       username: values.username,
       email: values.email,
@@ -488,11 +468,11 @@ export default function AuthPage() {
               <CardContent component="form" onSubmit={loginForm.handleSubmit(onLoginSubmit)}>
                 <TextField
                   fullWidth
-                  label="Username"
+                  label="Email"
                   margin="normal"
-                  {...loginForm.register('username')}
-                  error={!!loginForm.formState.errors.username}
-                  helperText={loginForm.formState.errors.username?.message}
+                  {...loginForm.register('email')}
+                  error={!!loginForm.formState.errors.email}
+                  helperText={loginForm.formState.errors.email?.message}
                 />
                 <TextField
                   fullWidth
