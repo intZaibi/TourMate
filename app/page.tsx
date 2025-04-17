@@ -356,9 +356,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <CallToAction/>
       <Footer/>
       {/* <RecommendationsSection isLoading={false} recommendation={recommendation}/> */}
+      
     </React.Fragment>
     
 
