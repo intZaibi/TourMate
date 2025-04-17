@@ -3,8 +3,10 @@ import Button from '@mui/material/Button'
 import { Globe } from "lucide-react";
 import { IconButton } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import { useRouter } from "next/navigation";
 
-export function Header() {
+export function Header({user, logoutMutation}: any) {
+  const router = useRouter();
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -21,9 +23,13 @@ export function Header() {
         </nav>
         
         <div className="flex items-center gap-2">
-          <Button variant="outlined" sx={{fontWeight: '500', textTransform: 'none', borderColor: 'hsl(20 5.9% 90%)', color: 'black', '&:hover': {backgroundColor: 'hsl(20 5.9% 97%)',}, display: { sm: 'none', xs: 'none', md: 'inline-block' }}}>Sign In</Button>
+          {!user? <>
+          <Button onClick={()=>router.push('/auth')} variant="outlined" sx={{fontWeight: '500', textTransform: 'none', borderColor: 'hsl(20 5.9% 90%)', color: 'black', '&:hover': {backgroundColor: 'hsl(20 5.9% 97%)',}, display: { sm: 'none', xs: 'none', md: 'inline-block' }}}>Sign In</Button>
 
-          <Button variant="contained" sx={{textTransform: 'none',}}>Get Started</Button>
+          <Button onClick={()=>router.push('/auth')} variant="contained" sx={{textTransform: 'none',}}>Get Started</Button>
+          </>:
+          <Button onClick={()=>logoutMutation.mutate()}>Logout</Button>
+          }
 
           <IconButton aria-label="delete" sx={{display: {md: 'none'}}}>
             <MenuIcon />

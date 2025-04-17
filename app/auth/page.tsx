@@ -1,374 +1,3 @@
-// 'use client'
-// import { useState, useEffect } from 'react';
-// // import { useLocation } from 'wouter';
-// import { useForm } from 'react-hook-form';
-// import { zodResolver } from '@hookform/resolvers/zod';
-// import { z } from 'zod';
-// import { useAuth } from '@/hooks/use-auth';
-// import { Globe, LogIn, User, UserPlus } from 'lucide-react';
-
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from '@/components/ui/card';
-// import {
-//   Tabs,
-//   TabsContent,
-//   TabsList,
-//   TabsTrigger,
-// } from '@/components/ui/tabs';
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from '@/components/ui/form';
-// import { Input } from '@mui/material';
-// import { useRouter } from 'next/navigation';
-// import { Button } from '@mui/material';
-
-// // Login form schema
-// const loginSchema = z.object({
-//   username: z.string().min(3, 'Username must be at least 3 characters'),
-//   password: z.string().min(6, 'Password must be at least 6 characters'),
-// });
-
-// // Registration form schema
-// const registerSchema = z.object({
-//   username: z.string().min(3, 'Username must be at least 3 characters'),
-//   email: z.string().email('Please enter a valid email'),
-//   password: z.string().min(6, 'Password must be at least 6 characters'),
-//   confirmPassword: z.string(),
-// }).refine((data) => data.password === data.confirmPassword, {
-//   message: "Passwords don't match",
-//   path: ['confirmPassword'],
-// });
-
-// type LoginFormValues = z.infer<typeof loginSchema>;
-// type RegisterFormValues = z.infer<typeof registerSchema>;
-
-// export default function AuthPage() {
-//   const [activeTab, setActiveTab] = useState('login');
-//   const { user, loginMutation, registerMutation } = useAuth();
-//   // const [_, setLocation] = useLocation();
-//   const router = useRouter();
-
-//   // Redirect to home if already logged in
-//   useEffect(() => {
-//     if (user) {
-//       router.push('/');
-//     }
-//   }, [user]);
-
-//   // Login form
-//   const loginForm = useForm<LoginFormValues>({
-//     resolver: zodResolver(loginSchema),
-//     defaultValues: {
-//       username: '',
-//       password: '',
-//     },
-//   });
-
-//   // Registration form
-//   const registerForm = useForm<RegisterFormValues>({
-//     resolver: zodResolver(registerSchema),
-//     defaultValues: {
-//       username: '',
-//       email: '',
-//       password: '',
-//       confirmPassword: '',
-//     },
-//   });
-
-//   // Handle login form submission
-//   const onLoginSubmit = (values: LoginFormValues) => {
-//     loginMutation.mutate(values);
-//   };
-
-//   // Handle registration form submission
-//   const onRegisterSubmit = (values: RegisterFormValues) => {
-//     registerMutation.mutate({
-//       username: values.username,
-//       email: values.email,
-//       password: values.password,
-//     });
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
-//       {/* Left Column - Auth Forms */}
-//       <div className="flex-1 flex flex-col justify-center items-center p-6 md:p-12">
-//         <div className="w-full max-w-md">
-//           <div className="text-center mb-8">
-//             <div className="flex items-center justify-center mb-4">
-//               <Globe className="h-10 w-10 text-primary-600" />
-//               <span className="font-bold text-2xl text-primary-600 ml-2">TourMate</span>
-//             </div>
-//             <h1 className="text-2xl font-bold">Welcome to TourMate</h1>
-//             <p className="text-gray-600 mt-2">
-//               {activeTab === 'login' 
-//                 ? 'Sign in to your account to access your travel recommendations and saved trips' 
-//                 : 'Create an account to get personalized travel recommendations and save your favorite trips'}
-//             </p>
-//           </div>
-
-//           <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab}>
-//             <TabsList className="grid grid-cols-2 w-full mb-8">
-//               <TabsTrigger value="login" className="flex items-center gap-2">
-//                 <LogIn className="h-4 w-4" />
-//                 Sign In
-//               </TabsTrigger>
-//               <TabsTrigger value="register" className="flex items-center gap-2">
-//                 <UserPlus className="h-4 w-4" />
-//                 Sign Up
-//               </TabsTrigger>
-//             </TabsList>
-
-//             <TabsContent value="login">
-//               <Card>
-//                 <CardHeader>
-//                   <CardTitle>Sign In</CardTitle>
-//                   <CardDescription>
-//                     Enter your credentials to access your account
-//                   </CardDescription>
-//                 </CardHeader>
-//                 <CardContent>
-//                   <Form {...loginForm}>
-//                     <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
-//                       <FormField
-//                         control={loginForm.control}
-//                         name="username"
-//                         render={({ field }: any) => (
-//                           <FormItem>
-//                             <FormLabel>Username</FormLabel>
-//                             <FormControl>
-//                               <Input
-//                                 placeholder="Enter your username" 
-//                                 {...field} 
-//                               />
-//                             </FormControl>
-//                             <FormMessage />
-//                           </FormItem>
-//                         )}
-//                       />
-                      
-//                       <FormField
-//                         control={loginForm.control}
-//                         name="password"
-//                         render={({ field }: any) => (
-//                           <FormItem>
-//                             <FormLabel>Password</FormLabel>
-//                             <FormControl>
-//                               <Input 
-//                                 type="password" 
-//                                 placeholder="Enter your password" 
-//                                 {...field} 
-//                               />
-//                             </FormControl>
-//                             <FormMessage />
-//                           </FormItem>
-//                         )}
-//                       />
-                      
-//                       <Button
-//                         type="submit" 
-//                         className="w-full"
-//                         disabled={loginMutation.isPending}
-//                       >
-//                         {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
-//                       </Button>
-//                     </form>
-//                   </Form>
-                  
-//                   <div className="mt-4 text-center text-sm text-gray-500">
-//                     <p>
-//                       Don't have an account?{' '}
-//                       <button
-//                         onClick={() => setActiveTab('register')}
-//                         className="text-primary-600 hover:underline"
-//                       >
-//                         Sign up
-//                       </button>
-//                     </p>
-//                   </div>
-//                 </CardContent>
-//               </Card>
-//             </TabsContent>
-
-//             <TabsContent value="register">
-//               <Card>
-//                 <CardHeader>
-//                   <CardTitle>Create an Account</CardTitle>
-//                   <CardDescription>
-//                     Fill in your details to create a new account
-//                   </CardDescription>
-//                 </CardHeader>
-//                 <CardContent>
-//                   <Form {...registerForm}>
-//                     <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
-//                       <FormField
-//                         control={registerForm.control}
-//                         name="username"
-//                         render={({ field }: any ) => (
-//                           <FormItem>
-//                             <FormLabel>Username</FormLabel>
-//                             <FormControl>
-//                               <Input 
-//                                 placeholder="Choose a username" 
-//                                 {...field} 
-//                               />
-//                             </FormControl>
-//                             <FormMessage />
-//                           </FormItem>
-//                         )}
-//                       />
-                      
-//                       <FormField
-//                         control={registerForm.control}
-//                         name="email"
-//                         render={({ field }:any ) => (
-//                           <FormItem>
-//                             <FormLabel>Email</FormLabel>
-//                             <FormControl>
-//                               <Input 
-//                                 type="email" 
-//                                 placeholder="Your email address" 
-//                                 {...field} 
-//                               />
-//                             </FormControl>
-//                             <FormMessage />
-//                           </FormItem>
-//                         )}
-//                       />
-                      
-//                       <FormField
-//                         control={registerForm.control}
-//                         name="password"
-//                         render={({ field }:any ) => (
-//                           <FormItem>
-//                             <FormLabel>Password</FormLabel>
-//                             <FormControl>
-//                               <Input 
-//                                 type="password" 
-//                                 placeholder="Create a password" 
-//                                 {...field} 
-//                               />
-//                             </FormControl>
-//                             <FormMessage />
-//                           </FormItem>
-//                         )}
-//                       />
-                      
-//                       <FormField
-//                         control={registerForm.control}
-//                         name="confirmPassword"
-//                         render={({ field }:any ) => (
-//                           <FormItem>
-//                             <FormLabel>Confirm Password</FormLabel>
-//                             <FormControl>
-//                               <Input 
-//                                 type="password" 
-//                                 placeholder="Confirm your password" 
-//                                 {...field} 
-//                               />
-//                             </FormControl>
-//                             <FormMessage />
-//                           </FormItem>
-//                         )}
-//                       />
-                      
-//                       <Button 
-//                         type="submit" 
-//                         className="w-full"
-//                         disabled={registerMutation.isPending}
-//                       >
-//                         {registerMutation.isPending ? 'Creating Account...' : 'Create Account'}
-//                       </Button>
-//                     </form>
-//                   </Form>
-                  
-//                   <div className="mt-4 text-center text-sm text-gray-500">
-//                     <p>
-//                       Already have an account?{' '}
-//                       <button
-//                         onClick={() => setActiveTab('login')}
-//                         className="text-primary-600 hover:underline"
-//                       >
-//                         Sign in
-//                       </button>
-//                     </p>
-//                   </div>
-//                 </CardContent>
-//               </Card>
-//             </TabsContent>
-//           </Tabs>
-//         </div>
-//       </div>
-
-//       {/* Right Column - Hero */}
-//       <div className="hidden md:flex md:w-1/2 bg-primary-600 text-black/80 p-12 flex-col justify-center relative">
-//         <div className="absolute inset-0 bg-cover bg-center" 
-//              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80')" }} />
-        
-//         <div className="relative z-10 bg-white/40 p-6 rounded-xl">
-//           <h2 className="text-3xl font-bold mb-6">Discover Your Perfect Trip with AI</h2>
-//           <p className="text-xl mb-8">
-//             TourMate helps you find personalized travel recommendations based on your preferences
-//           </p>
-          
-//           <div className="space-y-6">
-//             <div className="flex items-start space-x-4">
-//               <div className="bg-white/10 p-2 rounded-full">
-//                 <Globe className="h-6 w-6" />
-//               </div>
-//               <div>
-//                 <h3 className="font-semibold text-lg">Personalized Recommendations</h3>
-//                 <p className="text-black/80">
-//                   Get tailored destination suggestions that match your travel style and interests
-//                 </p>
-//               </div>
-//             </div>
-            
-//             <div className="flex items-start space-x-4">
-//               <div className="bg-white/10 p-2 rounded-full">
-//                 <User className="h-6 w-6" />
-//               </div>
-//               <div>
-//                 <h3 className="font-semibold text-lg">Save Your Favorites</h3>
-//                 <p className="text-black/80">
-//                   Store your preferred destinations, create wishlists, and track your travel history
-//                 </p>
-//               </div>
-//             </div>
-            
-//             <br className="bg-white/20 my-8" />
-            
-//             <div className="bg-white/40 p-6 rounded-xl">
-//               <p className="italic text-black/80">
-//                 "TourMate helped me discover amazing places I never would have found on my own. The personalized
-//                 recommendations were spot on for my travel style!"
-//               </p>
-//               <p className="mt-4 font-medium">— Sarah T., Adventure Traveler</p>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
 'use client';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -436,9 +65,9 @@ export default function AuthPage() {
   };
 
   return (
-    <Grid container sx={{ minHeight: '100vh' }}>
+    <Grid container sx={{ minHeight: '100vh', width: '100vw' }}>
       {/* Left Column - Form */}
-      <Grid item xs={12} md={6}>
+      <Grid sx={{maxWidth: "40%"}}>
         <Container maxWidth="sm" sx={{ py: 8 }}>
           <Box textAlign="center" mb={4}>
             <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
@@ -458,12 +87,11 @@ export default function AuthPage() {
           </Box>
 
           <Tabs value={activeTab} onChange={(_, val) => setActiveTab(val)} centered>
-            <Tab icon={<LogIn size={20} />} iconPosition="start" label="Sign In" />
-            <Tab icon={<UserPlus size={20} />} iconPosition="start" label="Sign Up" />
+            <Tab icon={<LogIn size={16} />} iconPosition="start" label="Sign In" />
+            <Tab icon={<UserPlus size={16} />} iconPosition="start" label="Sign Up" />
           </Tabs>
-
           {activeTab === 0 && (
-            <Card variant="outlined" sx={{ mt: 4 }}>
+            <Card variant="elevation" sx={{ mt: 4 }}>
               <CardHeader title="Sign In" subheader="Enter your credentials to access your account" />
               <CardContent component="form" onSubmit={loginForm.handleSubmit(onLoginSubmit)}>
                 <TextField
@@ -473,8 +101,9 @@ export default function AuthPage() {
                   {...loginForm.register('email')}
                   error={!!loginForm.formState.errors.email}
                   helperText={loginForm.formState.errors.email?.message}
+                  sx={{height: '5%'}}
                 />
-                <TextField
+                 <TextField
                   fullWidth
                   label="Password"
                   type="password"
@@ -573,8 +202,6 @@ export default function AuthPage() {
 
       {/* Right Column - Hero Section */}
       <Grid
-        item
-        md={6}
         sx={{
           display: { xs: 'none', md: 'flex' },
           backgroundImage:
@@ -582,6 +209,10 @@ export default function AuthPage() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           position: 'relative',
+          width: '60%',
+          // display: "flex",
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
         <Box
@@ -634,6 +265,7 @@ export default function AuthPage() {
         </Box>
       </Grid>
     </Grid>
+
   );
 }
 
