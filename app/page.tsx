@@ -360,9 +360,7 @@ export default function Home() {
       <CallToAction/>
       <Footer/>
       {/* <RecommendationsSection isLoading={false} recommendation={recommendation}/> */}
-      
-    </React.Fragment>
-    
 
+    </React.Fragment>
   );
 }
