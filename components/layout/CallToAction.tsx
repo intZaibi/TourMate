@@ -1,4 +1,3 @@
-// import { Button } from "@mui/material";
 import { Button } from "@mui/material";
 import { MapPin, Info } from "lucide-react";
 
@@ -31,7 +30,6 @@ export function CallToAction() {
             size="large"
             variant="outlined"
             sx={{border: '2px solid white', paddingX: '20px', borderRadius: '50px', color: 'white',textTransform: 'none', fontWeight: 'bolder', ":hover": {border: '2px solid white', bgcolor: 'white', borderRadius: '50px', color: '#1565c0'}}}
-            // className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-primary rounded-full"
           >
             <Info className="mr-2 h-5 w-5" />
             <span>Learn More</span>
