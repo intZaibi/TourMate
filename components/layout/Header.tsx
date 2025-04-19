@@ -17,9 +17,10 @@ export function Header({user, logoutMutation}: any) {
         
         <nav className="hidden md:flex items-center space-x-6">
           <Link href="/" className="font-medium hover:text-primary transition">Home</Link>
+          <Link href="/recommendations" className="font-medium hover:text-primary transition">Recommendations</Link>
           <Link href="/my-trips" className="font-medium hover:text-primary transition">My Trips</Link>
-          <Link href="/explore" className="font-medium hover:text-primary transition">Explore</Link>
-          <Link href="/help" className="font-medium hover:text-primary transition">Help</Link>
+          {/* <Link href="/explore" className="font-medium hover:text-primary transition">Explore</Link> */}
+          <Link href="/help" className="font-medium hover:text-primary transition">Contact Us</Link>
         </nav>
         
         <div className="flex items-center gap-2">

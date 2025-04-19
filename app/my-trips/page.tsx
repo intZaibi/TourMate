@@ -1,8 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { Card } from "@mui/material";
-import { Button } from "@mui/material";
-import Select from '@mui/material/Select';
+import { Card, Select, Button, MenuItem } from "@mui/material";
 
 interface Trip {
   id: string;
@@ -31,13 +29,13 @@ export default function MyTrips() {
       
       <Select 
         value={filter}
-        onChange={setFilter}
+        onChange={(e)=>setFilter(e.target.value)}
         className="mb-6"
       >
-        <option value="all">All Trips</option>
-        <option value="adventure">Adventure</option>
-        <option value="relaxing">Relaxing</option>
-        <option value="family">Family-friendly</option>
+        <MenuItem value="all">All Trips</MenuItem>
+        <MenuItem value="adventure">Adventure</MenuItem>
+        <MenuItem value="relaxing">Relaxing</MenuItem>
+        <MenuItem value="family">Family-friendly</MenuItem>
       </Select>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
