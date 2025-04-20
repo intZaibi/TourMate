@@ -6,7 +6,7 @@ const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
   apiKey: process.env.OPENAI_API_KEY
 });
-
+console.log(process.env.OPENAI_API_KEY)
 export default async function generateTravelRecommendation(preferences: TravelPreference): Promise<TravelRecommendation> {
   const prompt = `
     Generate a comprehensive travel recommendation based on the following user preferences:

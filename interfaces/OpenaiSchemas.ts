@@ -1,11 +1,15 @@
-export interface TravelPreference {
-  destination: string;
-  duration: number;
-  travelStyles: string[];
-  interests: string[];
-  budget: number;
-  additionalInfo?: string;
-}
+import { string, z } from "zod";
+
+
+export const TravelPreferenceValidationSchema = z.object({
+  destination: z.string(),
+  duration: z.number(),
+  travelStyles: z.array(string()),
+  interests: z.array(string()),
+  budget: z.number(),
+  additionalInfo: z.string().optional()
+})
+export type TravelPreference = z.infer<typeof TravelPreferenceValidationSchema>
 
 export interface TravelRecommendation {
   destination: string;

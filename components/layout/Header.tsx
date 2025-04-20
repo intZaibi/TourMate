@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import Button from '@mui/material/Button'
 import { Globe } from "lucide-react";

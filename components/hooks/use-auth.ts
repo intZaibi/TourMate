@@ -3,7 +3,7 @@ import { SignInInterface, SignUpInterface, User } from '@/interfaces/UsersSchema
 import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
-const apiRequest = async (method:string, path: string, credentials?: SignInInterface | SignUpInterface | null) => {
+export const apiRequest = async (method:string, path: string, credentials?: SignInInterface | SignUpInterface | undefined | unknown) => {
   const res = await fetch(path, {
     method,
     headers: {

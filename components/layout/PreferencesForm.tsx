@@ -2,21 +2,22 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest } from "@/components/hooks/use-auth";
 import { CheckCircle, Crown, PiggyBank, Mountain } from "lucide-react";
-import {Button, Input, TextField, , InputLabel} from '@mui/material'
-import { Range } from "@/components/ui/range";
+import {Button, Input, TextareaAutosize, Slider, InputLabel} from '@mui/material'
+import toast from "react-hot-toast";
+import { TravelPreference, TravelPreferenceValidationSchema } from "@/interfaces/OpenaiSchemas";
 
 interface PreferencesFormProps {
-  onSubmitSuccess: (data: any) => void;
+  onSubmitSuccess: (data: any) => void,
+  setIsLoading: (data: boolean)=>void
 }
 
-export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
-  const { toast } = useToast();
+export function PreferencesForm({ setIsLoading, onSubmitSuccess }: PreferencesFormProps) {
   const [budgetValue, setBudgetValue] = useState(2000);
 
-  const form = useForm<TravelPreferenceFormValues>({
-    resolver: zodResolver(travelPreferenceFormSchema),
+  const form = useForm<TravelPreference>({
+    resolver: zodResolver(TravelPreferenceValidationSchema),
     defaultValues: {
       destination: "",
       duration: 5,
@@ -28,27 +29,25 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
   });
 
   const generateRecommendation = useMutation({
-    mutationFn: async (data: TravelPreferenceFormValues) => {
-      const response = await apiRequest("POST", "/api/recommendations", data);
+    mutationFn: async (data: TravelPreference) => {
+      setIsLoading(true);
+      const response = await apiRequest("POST", "/api/openai", {preferences: data});
       return response.json();
     },
     onSuccess: (data) => {
-      toast({
-        title: "Recommendations generated!",
-        description: "Your personalized travel plan is ready.",
-      });
-      onSubmitSuccess(data);
+      setIsLoading(false);
+      toast.success("Recommendations generated! \n Your personalized travel plan is ready.");
+      console.log(data.result)
+      alert('check console')
+      onSubmitSuccess(data.result);
     },
     onError: (error) => {
-      toast({
-        title: "Error",
-        description: `Failed to generate recommendations: ${error.message}`,
-        variant: "destructive",
-      });
+      alert('failed')
+      toast.error(`Error \n Failed to generate recommendations: ${error.message}`);
     }
   });
 
-  const onSubmit = (data: TravelPreferenceFormValues) => {
+  const onSubmit = (data: TravelPreference) => {
     generateRecommendation.mutate(data);
   };
 
@@ -66,13 +65,14 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
     { id: "relaxation", label: "Relaxation" }
   ];
 
-  const handleBudgetChange = (value: number[]) => {
-    setBudgetValue(value[0]);
-    form.setValue("budget", value[0], { shouldValidate: true });
+  const handleBudgetChange = (event: Event, value: number | number[]) => {
+    const budget = Array.isArray(value) ? value[0] : value;
+    setBudgetValue(budget);
+    form.setValue("budget", budget, { shouldValidate: true });
   };
 
   return (
-    <section id="preferences" className="py-16 bg-neutral-200">
+    <section id="preferences" className="py-8 bg-neutral-200">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
           <div className="md:flex">
@@ -104,7 +104,7 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   <div>
-                    <Label htmlFor="destination">Destination</Label>
+                    <InputLabel htmlFor="destination">Destination</InputLabel>
                     <Input
                       id="destination"
                       placeholder="City, Country, or Region"
@@ -116,7 +116,7 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
                   </div>
                   
                   <div>
-                    <Label htmlFor="duration">Trip Duration</Label>
+                    <InputLabel htmlFor="duration">Trip Duration</InputLabel>
                     <div className="flex items-center space-x-2">
                       <Input
                         id="duration"
@@ -135,7 +135,7 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
                 </div>
                 
                 <div className="mb-6">
-                  <Label>Travel Style</Label>
+                  <InputLabel>Travel Style</InputLabel>
                   <div className="grid grid-cols-3 gap-2 mt-1">
                     <Controller
                       control={form.control}
@@ -166,17 +166,35 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
                                     field.onChange(newValue);
                                   }}
                                 />
-                                <label
+                                <InputLabel
                                   htmlFor={`style-${style.id}`}
-                                  className={`flex flex-col items-center p-2 text-center border rounded-md cursor-pointer transition-all 
+                                  sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    padding: 2, // Tailwind's p-2 = 0.5rem = 8px => MUI spacing unit = 1 = 8px
+                                    textAlign: 'center',
+                                    borderWidth: 1,
+                                    borderStyle: 'solid',
+                                    borderRadius: 1, // Tailwind rounded-md ~ 4px
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease-in-out',
+                                    borderColor: isSelected ? 'primary.main' : 'grey.300',
+                                    backgroundColor: isSelected ? 'primary.main' : 'transparent',
+                                    color: isSelected ? 'common.white' : 'text.primary',
+                                    opacity: isSelected ? 0.9 : 1, // simulate bg-opacity-10 if needed
+                                  }}
+                                  
+                                  className={`flex flex-col justify-center items-center p-2 text-center border rounded-md cursor-pointer transition-all 
                                     ${isSelected 
-                                      ? 'border-primary bg-primary bg-opacity-10' 
+                                      ? 'border-primary bg-primary bg-opacity-10 text-white' 
                                       : 'border-gray-300'
                                     }`}
                                 >
                                   {style.icon}
                                   <span className="text-sm mt-1">{style.label}</span>
-                                </label>
+                                </InputLabel>
                               </div>
                             );
                           })}
@@ -190,7 +208,7 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
                 </div>
                 
                 <div className="mb-6">
-                  <Label>Interests</Label>
+                  <InputLabel>Interests</InputLabel>
                   <div className="flex flex-wrap gap-2 mt-1">
                     <Controller
                       control={form.control}
@@ -221,8 +239,22 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
                                     field.onChange(newValue);
                                   }}
                                 />
-                                <label
+                                <InputLabel
                                   htmlFor={`interest-${interest.id}`}
+                                  sx={{
+                                    display: 'block',
+                                    px: 3, // Tailwind px-3 = 0.75rem = 12px
+                                    py: 1, // Tailwind py-1 = 0.25rem = 4px
+                                    borderWidth: 1,
+                                    borderStyle: 'solid',
+                                    borderRadius: '9999px', // Tailwind rounded-full
+                                    fontSize: '0.875rem', // Tailwind text-sm ~ 14px
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease-in-out',
+                                    borderColor: isSelected ? 'primary.main' : 'grey.300',
+                                    backgroundColor: isSelected ? 'primary.main' : 'transparent',
+                                    color: isSelected ? 'common.white' : 'text.primary',
+                                  }}
                                   className={`block px-3 py-1 border rounded-full text-sm cursor-pointer transition-all
                                     ${isSelected 
                                       ? 'border-primary bg-primary text-white' 
@@ -230,7 +262,7 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
                                     }`}
                                 >
                                   {interest.label}
-                                </label>
+                                </InputLabel>
                               </div>
                             );
                           })}
@@ -244,25 +276,25 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
                 </div>
                 
                 <div className="mb-6">
-                  <Label htmlFor="budget">Budget Range</Label>
+                  <InputLabel htmlFor="budget">Budget Range</InputLabel>
                   <div className="flex items-center mt-2">
-                    <span className="text-gray-700 mr-2">$</span>
+                    <span className="text-gray-700 mr-2"></span>
                     <Controller
                       control={form.control}
                       name="budget"
                       render={({ field }) => (
-                        <Range
+                        <Slider
                           value={[field.value]}
-                          min={100}
-                          max={10000}
-                          step={100}
-                          onValueChange={handleBudgetChange}
-                          className="w-full"
+                          min={500}
+                          max={100000}
+                          step={500}
+                          onChange={(event, value) => handleBudgetChange(event, value)}
+                          color="primary"
                         />
                       )}
                     />
-                    <span className="text-gray-700 ml-2 w-16" id="budget-value">
-                      ${budgetValue.toLocaleString()}
+                    <span className="text-gray-700 ml-2 w-32 text-right" id="budget-value">
+                      PKR {budgetValue.toLocaleString()}
                     </span>
                   </div>
                   {form.formState.errors.budget && (
@@ -271,10 +303,11 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
                 </div>
                 
                 <div className="mb-6">
-                  <Label htmlFor="additionalInfo">Additional Preferences</Label>
-                  <Textarea
+                  <InputLabel htmlFor="additionalInfo">Additional Preferences</InputLabel>
+                  <TextareaAutosize
                     id="additionalInfo"
-                    rows={3}
+                    minRows={3}
+                    style={{width: '100%', padding: '7px', border: '1px black solid', borderRadius: '5px', marginTop: '5px'}}
                     placeholder="Tell us more about what you're looking for..."
                     {...form.register("additionalInfo")}
                   />
@@ -283,8 +316,9 @@ export function PreferencesForm({ onSubmitSuccess }: PreferencesFormProps) {
                 <div className="flex justify-end">
                   <Button 
                     type="submit" 
-                    className="inline-flex items-center"
+                    variant='contained'
                     disabled={generateRecommendation.isPending}
+                    sx={{textTransform:'none'}}
                   >
                     <span>Generate Recommendations</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
