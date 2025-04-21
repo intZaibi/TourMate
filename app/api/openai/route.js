@@ -4,92 +4,92 @@ import { NextResponse } from "next/server";
 
 // const openai = new OpenAI({
 //   baseURL: "https://openrouter.ai/api/v1",
-//   apiKey: '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'
+//   apiKey: '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'
 // });
 
 // async function generateTravelRecommendation(preferences) {
-//   const prompt = `
-//     Generate a comprehensive travel recommendation based on the following user preferences:
+  const prompt = `
+    Generate a comprehensive travel recommendation based on the following user preferences:
     
-//     Destination: Dera Ismail Khan
-//     Trip Duration: 5 days
-//     Budget: PKR 10000 
+    Destination: Dera Ismail Khan
+    Trip Duration: 5 days
+    Budget: PKR 10000 
     
-//     Create a detailed travel plan with the following information:
-//     1. A brief overview of the destination and why it matches the user's preferences
-//     2. A day-by-day itinerary with activities and attractions: - Include suggestions for historical landmarks, local food experiences, cultural events, religious sites, outdoor activities, shopping, and entertainment.
-//     3. A budget breakdown estimating costs for accommodations, food, activities, local transportation, and shopping
-//     4. Recommended accommodations based on the travel style
-//     5. Dining options that match the user's interests
-//     6. Practical travel tips
-//     7. Weather forecast (fictional but realistic for the destination)
-//     8. Tags that describe the destination
-//     Note: An commons.wikimedia.org api will be used for images, so suggest a precise keyword to search the particular image.
+    Create a detailed travel plan with the following information:
+    1. A brief overview of the destination and why it matches the user's preferences
+    2. A day-by-day itinerary with activities and attractions: - Include suggestions for historical landmarks, local food experiences, cultural events, religious sites, outdoor activities, shopping, and entertainment.
+    3. A budget breakdown estimating costs for accommodations, food, activities, local transportation, and shopping
+    4. Recommended accommodations based on the travel style
+    5. Dining options that match the user's interests
+    6. Practical travel tips
+    7. Weather forecast (fictional but realistic for the destination)
+    8. Tags that describe the destination
+    Note: An common.wikimedia.org api will be used for images so suggest a precise keyword for image from common.wikimedia.org to search the particular image e.g: "Islamabad title:(Faisal Mosque)".
     
-//     Return the information in a structured JSON format with the following structure:
-//     {
-//       "destination": string,
-//       "overview": string,
-//       "matchPercentage": number (between 80-98),
-//       "bestTimeToVisit": string,
-//       "avgDailyCost": string,
-//       "language": string,
-//       "currency": string,
-//       "destinationImageKeyword": string (a precise keyword for image of the destination),
-//       "tags": string[],
-//       "itinerary": [
-//         {
-//           "day": number,
-//           "title": string,
-//           "activities": [
-//             {
-//               "time": string (e.g., "09:00"),
-//               "title": string,
-//               "description": string
-//               "imageKeyword": string (optional, a precise keyword for image of the activity)
-//             }
-//           ]
-//         }
-//       ],
-//       "accommodations": [
-//         {
-//           "name": string,
-//           "type": string,
-//           "priceRange": string,
-//           "description": string
-//           "imageKeyword": string (optional, a precise keyword for image of the accommodation)
-//         }
-//       ],
-//       "dining": [
-//         {
-//           "name": string,
-//           "cuisine": string,
-//           "priceRange": string,
-//           "description": string
-//           "imageKeyword": string (optional, a precise keyword for image of the restaurant or food)
-//         }
-//       ],
-//       "budget": {
-//         "accommodation": number,
-//         "food": number,
-//         "activities": number,
-//         "transportation": number,
-//         "shopping": number,
-//         "total": number,
-//         "perDay": number
-//       },
-//       "travelTips": string[],
-//       "weather": {
-//         "days": [
-//           {
-//             "day": string (e.g., "Mon"),
-//             "condition": string (e.g., "sunny", "cloudy", "rainy"),
-//             "temperature": string (e.g., "25°C")
-//           }
-//         ]
-//       }
-//     }
-//   `;
+    Return the information in a structured JSON format with the following structure:
+    {
+      "destination": string,
+      "overview": string,
+      "matchPercentage": number (between 80-98),
+      "bestTimeToVisit": string,
+      "avgDailyCost": string,
+      "language": string,
+      "currency": string,
+      "destinationImageKeyword": string (a precise keyword for image of the destination),
+      "tags": string[],
+      "itinerary": [
+        {
+          "day": number,
+          "title": string,
+          "activities": [
+            {
+              "time": string (e.g., "09:00"),
+              "title": string,
+              "description": string
+              "imageKeyword": string (optional, a precise keyword for image of the activity)
+            }
+          ]
+        }
+      ],
+      "accommodations": [
+        {
+          "name": string,
+          "type": string,
+          "priceRange": string,
+          "description": string
+          "imageKeyword": string (optional, a precise keyword for image of the accommodation)
+        }
+      ],
+      "dining": [
+        {
+          "name": string,
+          "cuisine": string,
+          "priceRange": string,
+          "description": string
+          "imageKeyword": string (optional, a precise keyword for image of the restaurant or food)
+        }
+      ],
+      "budget": {
+        "accommodation": number,
+        "food": number,
+        "activities": number,
+        "transportation": number,
+        "shopping": number,
+        "total": number,
+        "perDay": number
+      },
+      "travelTips": string[],
+      "weather": {
+        "days": [
+          {
+            "day": string (e.g., "Mon"),
+            "condition": string (e.g., "sunny", "cloudy", "rainy"),
+            "temperature": string (e.g., "25°C")
+          }
+        ]
+      }
+    }
+  `;
   
 //   console.log('sending api...');
 

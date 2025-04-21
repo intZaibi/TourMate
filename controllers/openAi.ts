@@ -4,9 +4,8 @@ import OpenAI from "openai";
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: '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'
 });
-console.log(process.env.OPENAI_API_KEY)
 export default async function generateTravelRecommendation(preferences: TravelPreference): Promise<TravelRecommendation> {
   const prompt = `
     Generate a comprehensive travel recommendation based on the following user preferences:
@@ -27,7 +26,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
     6. Practical travel tips
     7. Weather forecast (fictional but realistic for the destination)
     8. Tags that describe the destination
-    Note: An openverse.org api will be used for images so suggest a precise keyword for image from common.wikimedia.org to search the particular image.
+    Note: An common.wikimedia.org api will be used for images so suggest a precise keyword for image from common.wikimedia.org to search the particular image e.g: "Islamabad title:(Faisal Mosque)".
     
     Return the information in a structured JSON format with the following structure:
     {

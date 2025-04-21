@@ -6,15 +6,13 @@ import { Button } from "@mui/material";
 import { Edit, PlusCircle, Save, Share2, MapPin, Bed, Utensils, Calculator, Info, MinusCircle } from "lucide-react";
 
 interface RecommendationsSectionProps {
-  isLoading: boolean;
   recommendation: any | null;
 }
 
-export function RecommendationsSection({ isLoading, recommendation }: RecommendationsSectionProps) {
-  const [activeTab, setActiveTab] = useState("itinerary");
+export function RecommendationsSection({ recommendation }: RecommendationsSectionProps) {
   const [expandedDays, setExpandedDays] = useState(1);
 
-  if (!isLoading && !recommendation) {
+  if (!recommendation) {
     return null;
   }
 
@@ -28,16 +26,8 @@ export function RecommendationsSection({ isLoading, recommendation }: Recommenda
               </p>
             )}
             
-            {/* Loading State */}
-            {isLoading && (
-              <div className="flex flex-col items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary mb-4"></div>
-                <p className="text-lg font-medium text-neutral-500">Our AI is crafting your perfect trip...</p>
-              </div>
-            )}
-            
             {/* Results State */}
-            {!isLoading && recommendation && (
+            {recommendation && (
               <>
                 {/* Destination Overview */}
                 <div className="bg-neutral-100 rounded-xl p-6 mb-12">
@@ -97,7 +87,7 @@ export function RecommendationsSection({ isLoading, recommendation }: Recommenda
                 </div>
                 
                 {/* Tabs Navigation */}
-                <Tabs defaultValue="itinerary" className="mb-8" onValueChange={setActiveTab}>
+                <Tabs defaultValue="itinerary" className="mb-8">
                   <TabsList className="w-full bg-none border-b border-neutral-300 h-auto p-0 bg-transparent justify-start">
                     <TabsTrigger 
                       value="itinerary" 

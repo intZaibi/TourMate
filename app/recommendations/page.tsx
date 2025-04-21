@@ -242,19 +242,11 @@ const recommendation = {
 }
 
 export default function Recommendations() {
-    const [recommendation, setRecommendation] = useState<TravelRecommendation | null>(null)؛
-    const [isLoading, setIsLoading] = useState<boolean>(false)
     useAuth();
-    const setData =(data: TravelPreference)=>{
-
-    }
   return (
     <>
       <Header/>
-      {!recommendation? 
-      <PreferencesForm onSubmitSuccess={setRecommendation}/> :
-      <RecommendationsSection setIsLoading={setIsLoading} recommendation={recommendation}/>
-      }
+      <PreferencesForm /> 
       <Footer/>
     </>
   )
