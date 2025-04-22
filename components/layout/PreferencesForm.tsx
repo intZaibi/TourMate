@@ -8,6 +8,7 @@ import {Button, Input, TextareaAutosize, Slider, InputLabel} from '@mui/material
 import toast, { Toaster } from "react-hot-toast";
 import { TravelPreference, TravelPreferenceValidationSchema, TravelRecommendation } from "@/interfaces/OpenaiSchemas";
 import { RecommendationsSection } from "./RecommendationsSection";
+import AiLoader  from "./AILoader";
 
 export function PreferencesForm() {
   const [budgetValue, setBudgetValue] = useState(2000);
@@ -65,12 +66,7 @@ export function PreferencesForm() {
   };
 
   if(generateRecommendation.isPending){
-    return(
-      <div className="flex flex-col items-center justify-center py-12 h-[95vh]">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary mb-4"></div>
-        <p className="text-lg font-medium text-neutral-500">Our AI is crafting your perfect trip...</p>
-      </div>
-    )
+    return <AiLoader isPending={true}/>
   }
 
   return (

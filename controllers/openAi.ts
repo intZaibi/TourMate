@@ -4,7 +4,7 @@ import OpenAI from "openai";
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
-  apiKey: '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'
+  apiKey: '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'
 });
 export default async function generateTravelRecommendation(preferences: TravelPreference): Promise<TravelRecommendation> {
   const prompt = `
@@ -37,7 +37,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
       "avgDailyCost": string,
       "language": string,
       "currency": string,
-      "destinationImageURL": string (a precise keyword for image from common.wikimedia.org for the destination),
+      "destinationImageKeyword": string (a precise keyword for image from common.wikimedia.org for the destination),
       "tags": string[],
       "itinerary": [
         {
@@ -48,7 +48,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
               "time": string (e.g., "09:00"),
               "title": string,
               "description": string
-              "imageURL": string (optional, a precise keyword for image from common.wikimedia.org for the activity)
+              "imageKeyword": string (optional, a precise keyword for image from common.wikimedia.org for the activity)
             }
           ]
         }
@@ -59,7 +59,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
           "type": string,
           "priceRange": string,
           "description": string
-          "imageURL": string (optional, a precise keyword for image from common.wikimedia.org for the accommodation)
+          "imageKeyword": string (optional, a precise keyword for image from common.wikimedia.org for the accommodation)
         }
       ],
       "dining": [
@@ -68,7 +68,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
           "cuisine": string,
           "priceRange": string,
           "description": string
-          "imageURL": string (optional, a precise keyword for image from common.wikimedia.org for the restaurant or food)
+          "imageKeyword": string (optional, a precise keyword for image from common.wikimedia.org for the restaurant or food)
         }
       ],
       "budget": {
@@ -111,13 +111,13 @@ export default async function generateTravelRecommendation(preferences: TravelPr
       ],
       response_format: { type: "json_object" },
     });
-    // console.log(response);
+    console.log(response.choices[0].message.content);
     if (typeof response.choices[0].message.content === "string") {  // checking if AI has sent a response or not
       
       if (response.choices[0].message.content.includes("```")) {  // checking if AI has the correct response or not
         const arr = response.choices[0].message.content.split('```')[1].split('json')[1]
         const result = await JSON.parse(arr);
-        console.log('result:', result )
+        console.log('result:', arr )
         return result;
       } else {  // if unexpected response
         console.log(response.choices[0].message.content)

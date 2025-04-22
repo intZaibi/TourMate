@@ -19,7 +19,7 @@ export interface TravelRecommendation {
   avgDailyCost: string;
   language: string;
   currency: string;
-  destinationImageUrl: string;
+  destinationImageKeyword: string;
   tags: string[];
   itinerary: {
     day: number;
@@ -28,7 +28,7 @@ export interface TravelRecommendation {
       time: string;
       title: string;
       description: string;
-      imageUrl: string
+      imageKeyword: string
     }[];
   }[];
   accommodations: {
@@ -36,14 +36,14 @@ export interface TravelRecommendation {
     type: string;
     priceRange: string;
     description: string;
-    imageUrl: string
+    imageKeyword: string
   }[];
   dining: {
     name: string;
     cuisine: string;
     priceRange: string;
     description: string;
-    imageUrl: string
+    imageKeyword: string
   }[];
   budget: {
     accommodation: number;
