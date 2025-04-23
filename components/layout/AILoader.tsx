@@ -32,7 +32,7 @@ function LoadingComponent({ isPending }: {isPending: boolean}) {
     return () => clearInterval(dotInterval);
   }, []);
 
-  const loadingText = `${loadingMessages[messageIndex]}${'.'.repeat(dotCount)}`;
+  const loadingText = messageIndex < 6 ? `${loadingMessages[messageIndex]}${'.'.repeat(dotCount)}`: `Fetching images${'.'.repeat(dotCount)}`;
 
   if (isPending) {
     return (

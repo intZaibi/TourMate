@@ -4,7 +4,7 @@ import OpenAI from "openai";
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
-  apiKey: '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'
+  apiKey: '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'
 });
 export default async function generateTravelRecommendation(preferences: TravelPreference): Promise<TravelRecommendation> {
   const prompt = `
@@ -66,7 +66,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
         {
           "name": string,
           "cuisine": string,
-          "priceRange": string,
+          "priceRange": string (in PKR),
           "description": string
           "imageKeyword": string (optional, a precise keyword for image from common.wikimedia.org for the restaurant or food)
         }
@@ -111,13 +111,11 @@ export default async function generateTravelRecommendation(preferences: TravelPr
       ],
       response_format: { type: "json_object" },
     });
-    console.log(response.choices[0].message.content);
     if (typeof response.choices[0].message.content === "string") {  // checking if AI has sent a response or not
       
       if (response.choices[0].message.content.includes("```")) {  // checking if AI has the correct response or not
         const arr = response.choices[0].message.content.split('```')[1].split('json')[1]
         const result = await JSON.parse(arr);
-        console.log('result:', arr )
         return result;
       } else {  // if unexpected response
         console.log(response.choices[0].message.content)

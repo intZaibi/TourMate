@@ -34,9 +34,9 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                   <div className="md:flex items-start">
                     <div className="md:w-1/3 mb-6 md:mb-0 md:pr-6">
                       <div className="rounded-lg w-full h-60 bg-gray-200 overflow-hidden relative">
-                        {recommendation.destinationImageUrl ? (
+                        {recommendation.destinationImageKeyword ? (
                           <img 
-                            src={recommendation.destinationImageUrl} 
+                            src={recommendation.destinationImageKeyword} 
                             alt={recommendation.destination}
                             className="w-full h-full object-cover"
                           />
@@ -149,10 +149,10 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                     <div className="flex-grow">
                                       <div className="font-medium">{activity.title}</div>
                                       <p className="text-sm text-neutral-500">{activity.description}</p>
-                                      {activity.imageUrl && (
+                                      {activity.imageKeyword && (
                                         <div className="mt-2 rounded-md overflow-hidden h-32 w-full md:w-3/4">
                                           <img 
-                                            src={activity.imageUrl} 
+                                            src={activity.imageKeyword} 
                                             alt={activity.title}
                                             className="h-full w-full object-cover"
                                           />
@@ -221,14 +221,14 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                   <Bed className="text-neutral-400 w-6 h-6" />
                                   <span className="ml-2">Accommodation</span>
                                 </div>
-                                <span className="font-medium">${recommendation.budget.accommodation}</span>
+                                <span className="font-medium">PKR {recommendation.budget.accommodation}</span>
                               </div>
                               <div className="flex justify-between items-center">
                                 <div className="flex items-center">
                                   <Utensils className="text-neutral-400 w-6 h-6" />
                                   <span className="ml-2">Food & Dining</span>
                                 </div>
-                                <span className="font-medium">${recommendation.budget.food}</span>
+                                <span className="font-medium">PKR {recommendation.budget.food}</span>
                               </div>
                               <div className="flex justify-between items-center">
                                 <div className="flex items-center">
@@ -241,7 +241,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                   </svg>
                                   <span className="ml-2">Activities & Attractions</span>
                                 </div>
-                                <span className="font-medium">${recommendation.budget.activities}</span>
+                                <span className="font-medium">PKR {recommendation.budget.activities}</span>
                               </div>
                               <div className="flex justify-between items-center">
                                 <div className="flex items-center">
@@ -252,7 +252,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                   </svg>
                                   <span className="ml-2">Local Transportation</span>
                                 </div>
-                                <span className="font-medium">${recommendation.budget.transportation}</span>
+                                <span className="font-medium">PKR {recommendation.budget.transportation}</span>
                               </div>
                               <div className="flex justify-between items-center">
                                 <div className="flex items-center">
@@ -263,16 +263,16 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                   </svg>
                                   <span className="ml-2">Shopping & Misc</span>
                                 </div>
-                                <span className="font-medium">${recommendation.budget.shopping}</span>
+                                <span className="font-medium">PKR {recommendation.budget.shopping}</span>
                               </div>
                             </div>
                             
                             <div className="border-t border-neutral-200 pt-3">
                               <div className="flex justify-between items-center font-bold">
                                 <span>Total ({recommendation.itinerary.length} days)</span>
-                                <span className="text-lg">${recommendation.budget.total}</span>
+                                <span className="text-lg">PKR {recommendation.budget.total}</span>
                               </div>
-                              <div className="text-sm text-neutral-500 text-right">${recommendation.budget.perDay} per day</div>
+                              <div className="text-sm text-neutral-500 text-right">PKR {recommendation.budget.perDay} per day</div>
                             </div>
                           </CardContent>
                         </Card>
@@ -338,10 +338,10 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {recommendation.accommodations.map((accommodation:any, index:number) => (
                         <Card key={index}>
-                          {accommodation.imageUrl && (
+                          {accommodation.imageKeyword && (
                             <div className="relative h-40 w-full overflow-hidden">
                               <img 
-                                src={accommodation.imageUrl} 
+                                src={accommodation.imageKeyword} 
                                 alt={accommodation.name}
                                 className="w-full h-full object-cover"
                               />
@@ -368,10 +368,10 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {recommendation.dining.map((restaurant:any, index:number) => (
                         <Card key={index}>
-                          {restaurant.imageUrl && (
+                          {restaurant.imageKeyword && (
                             <div className="relative h-40 w-full overflow-hidden">
                               <img 
-                                src={restaurant.imageUrl} 
+                                src={restaurant.imageKeyword} 
                                 alt={restaurant.name}
                                 className="w-full h-full object-cover"
                               />
@@ -403,11 +403,11 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                               <h5 className="text-lg font-medium mb-3">Total Trip Budget</h5>
                               <div className="flex justify-between items-center text-2xl font-bold mb-2">
                                 <span>Total Cost</span>
-                                <span className="text-primary">${recommendation.budget.total}</span>
+                                <span className="text-primary">PKR {recommendation.budget.total}</span>
                               </div>
                               <div className="flex justify-between items-center text-sm text-neutral-500">
                                 <span>{recommendation.itinerary.length} days</span>
-                                <span>${recommendation.budget.perDay} per day</span>
+                                <span>PKR {recommendation.budget.perDay} per day</span>
                               </div>
                             </div>
                             
@@ -420,7 +420,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                     <span>Accommodation</span>
                                   </div>
                                   <div className="flex flex-col items-end">
-                                    <span className="font-medium">${recommendation.budget.accommodation}</span>
+                                    <span className="font-medium">PKR {recommendation.budget.accommodation}</span>
                                     <span className="text-xs text-neutral-500">
                                       {Math.round(recommendation.budget.accommodation / recommendation.budget.total * 100)}% of total
                                     </span>
@@ -433,7 +433,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                     <span>Food & Dining</span>
                                   </div>
                                   <div className="flex flex-col items-end">
-                                    <span className="font-medium">${recommendation.budget.food}</span>
+                                    <span className="font-medium">PKR {recommendation.budget.food}</span>
                                     <span className="text-xs text-neutral-500">
                                       {Math.round(recommendation.budget.food / recommendation.budget.total * 100)}% of total
                                     </span>
@@ -452,7 +452,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                     <span>Activities</span>
                                   </div>
                                   <div className="flex flex-col items-end">
-                                    <span className="font-medium">${recommendation.budget.activities}</span>
+                                    <span className="font-medium">PKR {recommendation.budget.activities}</span>
                                     <span className="text-xs text-neutral-500">
                                       {Math.round(recommendation.budget.activities / recommendation.budget.total * 100)}% of total
                                     </span>
@@ -469,7 +469,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                     <span>Transportation</span>
                                   </div>
                                   <div className="flex flex-col items-end">
-                                    <span className="font-medium">${recommendation.budget.transportation}</span>
+                                    <span className="font-medium">PKR {recommendation.budget.transportation}</span>
                                     <span className="text-xs text-neutral-500">
                                       {Math.round(recommendation.budget.transportation / recommendation.budget.total * 100)}% of total
                                     </span>
@@ -486,7 +486,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                     <span>Shopping & Misc</span>
                                   </div>
                                   <div className="flex flex-col items-end">
-                                    <span className="font-medium">${recommendation.budget.shopping}</span>
+                                    <span className="font-medium">PKR {recommendation.budget.shopping}</span>
                                     <span className="text-xs text-neutral-500">
                                       {Math.round(recommendation.budget.shopping / recommendation.budget.total * 100)}% of total
                                     </span>
