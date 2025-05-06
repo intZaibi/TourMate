@@ -15,6 +15,9 @@ export interface TravelRecommendation {
   destination: string;
   overview: string;
   matchPercentage: number;
+  tripDuration: number,
+  travelStyle: string,
+  approximateTotalCost: number,
   bestTimeToVisit: string;
   avgDailyCost: string;
   language: string;

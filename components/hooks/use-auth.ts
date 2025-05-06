@@ -3,7 +3,7 @@ import { SignInInterface, SignUpInterface, User } from '@/interfaces/UsersSchema
 import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
-export const apiRequest = async (method:string, path: string, credentials?: SignInInterface | SignUpInterface | undefined | unknown) => {
+export const apiRequest = async (method:string, path: string, credentials?: any) => {
   const res = await fetch(path, {
     method,
     headers: {
@@ -60,7 +60,7 @@ export function useAuth() {
 
   const registerMutation = useMutation({
     mutationFn: async (credentials: Omit<SignUpInterface, "confirmPassword">) => {
-      const res = await apiRequest("POST", "/api/auth/register", credentials);
+      const res = await apiRequest("POST", "/api/auth/signUp", credentials);
       return await res.json();
     },
     onSuccess: (user) => {

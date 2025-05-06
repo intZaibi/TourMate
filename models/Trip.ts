@@ -1,24 +1,20 @@
 import mongoose from "mongoose";
+mongoose.connect('mongodb://127.0.0.1:27017/test');
 
 const TripSchema = new mongoose.Schema({
-  preferences: [{
-    destination: String,
-    duration: Number,
-    travelStyles: Array,
-    interests: Array,
-    budget: Number,
-    additionalInfo: {type: String, required: false},
-  }],
-  recommendations: [{
+  recommendation: [{
     destination: String,
     overview: String,
     matchPercentage: Number,
+    tripDuration: Number,
+    travelStyle: String,
+    approximateTotalCost: Number,
     bestTimeToVisit: String,
     avgDailyCost: String,
     language: String,
     currency: String,
-    destinationImageUrl: String,
-    tags: Array,
+    destinationImageKeyword: String,
+    tags: [String],
     itinerary: [{
       day: Number,
       title: String,
@@ -26,22 +22,23 @@ const TripSchema = new mongoose.Schema({
         time: String,
         title: String,
         description: String,
-        imageUrl: String
+        imageKeyword: String
       }],
     }],
-    accommodations: [{
-      name: String,
-      type: String,
-      priceRange: String,
-      description: String,
-      imageUrl: String
-    }],
+    accommodations: [{type: mongoose.Schema.Types.Mixed}],
+    // accommodations: [{
+    //   name: String,
+    //   type: String,
+    //   priceRange: String,
+    //   description: String,
+    //   imageKeyword: String
+    // }],
     dining: [{
       name: String,
       cuisine: String,
       priceRange: String,
       description: String,
-      imageUrl: String
+      imageKeyword: String
     }],
     budget: {
       accommodation: Number,
@@ -52,7 +49,7 @@ const TripSchema = new mongoose.Schema({
       total: Number,
       perDay: Number,
     },
-    travelTips: Array,
+    travelTips: [String],
     weather: {
       days: [{
           day: String,
@@ -60,10 +57,11 @@ const TripSchema = new mongoose.Schema({
           temperature: String,
         }],
       },
-    }]
+    }],
+  userId: String
   }
 )
 
-const Trip = mongoose.model("Trip", TripSchema);
+const Trip = mongoose.models.Trip || mongoose.model("Trip", TripSchema);
 
 export default Trip;

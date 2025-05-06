@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@mui/material";
 import { Edit, PlusCircle, Save, Share2, MapPin, Bed, Utensils, Calculator, Info, MinusCircle } from "lucide-react";
+import { apiRequest } from "../hooks/use-auth";
+import toast, { Toaster } from "react-hot-toast";
 
 interface RecommendationsSectionProps {
   recommendation: any | null;
@@ -16,8 +18,19 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
     return null;
   }
 
+  const handleSave = async ()=>{
+    try {
+      await apiRequest("POST", "api/my-trips", {recommendation});
+      toast.success("Trip saved successfully!");
+    } catch (error) {
+      console.log("Error saving trip:", error);
+      toast.error("Trip not saved, something went wrong!")
+    }
+  }
+
   return (
     <section id="recommendations" className="py-16 bg-white">
+      <Toaster/>
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-4">Your Personalized Recommendations</h2>
             {recommendation && (
@@ -76,7 +89,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                       </div>
                       
                       <div className="flex flex-wrap gap-2">
-                        {recommendation.tags && recommendation.tags.map((tag:string, index:number) => (
+                        {recommendation.tags && recommendation.tags?.map((tag:string, index:number) => (
                           <span key={index} className="bg-primary bg-opacity-10 text-white px-3 py-1 rounded-full text-sm">
                             {tag}
                           </span>
@@ -132,7 +145,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                       <div className="flex flex-col md:w-3/5">
                         <h4 className="text-xl font-semibold mb-6">Your {recommendation.itinerary.length}-Day Itinerary</h4>
                         
-                        {recommendation.itinerary.slice(0, expandedDays).map((day:any, index:number) => (
+                        {recommendation.itinerary?.slice(0, expandedDays)?.map((day:any, index:number) => (
                           <Card key={index} className="mb-8 border-neutral-200">
                             <CardContent className="p-5">
                               <div className="flex items-center mb-4">
@@ -143,7 +156,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                               </div>
                               
                               <ul className="space-y-4 mb-4">
-                                {day.activities.map((activity:any, actIndex:number) => (
+                                {day.activities?.map((activity:any, actIndex:number) => (
                                   <li key={actIndex} className="flex">
                                     <div className="text-neutral-500 w-16 flex-shrink-0">{activity.time}</div>
                                     <div className="flex-grow">
@@ -297,7 +310,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                           <CardContent className="p-5">
                             <h4 className="text-xl font-semibold mb-4">Weather Forecast</h4>
                             <div className="grid grid-cols-5 gap-2 text-center">
-                              {recommendation.weather.days.map((day:any, index:number) => (
+                              {recommendation.weather.days?.map((day:any, index:number) => (
                                 <div key={index} className="p-2">
                                   <div className="text-sm font-medium mb-1">{day.day}</div>
                                   <div className="text-base">
@@ -318,7 +331,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                         <div className="mt-6">
                           <h4 className="text-xl font-semibold mb-4">Travel Tips</h4>
                           <ul className="space-y-3">
-                            {recommendation.travelTips.map((tip:string, index:number) => (
+                            {recommendation.travelTips?.map((tip:string, index:number) => (
                               <li key={index} className="flex items-start">
                                 <svg className="text-primary w-5 h-5 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -336,7 +349,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                   <TabsContent value="accommodations" className="mt-6">
                     <h4 className="text-xl font-semibold mb-6">Recommended Accommodations</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {recommendation.accommodations.map((accommodation:any, index:number) => (
+                      {recommendation.accommodations?.map((accommodation:any, index:number) => (
                         <Card key={index}>
                           {accommodation.imageKeyword && (
                             <div className="relative h-40 w-full overflow-hidden">
@@ -366,7 +379,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                   <TabsContent value="dining" className="mt-6">
                     <h4 className="text-xl font-semibold mb-6">Recommended Dining Options</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {recommendation.dining.map((restaurant:any, index:number) => (
+                      {recommendation.dining?.map((restaurant:any, index:number) => (
                         <Card key={index}>
                           {restaurant.imageKeyword && (
                             <div className="relative h-40 w-full overflow-hidden">
@@ -533,7 +546,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                         <CardContent className="p-5">
                           <h5 className="text-lg font-medium mb-4">Local Customs & Etiquette</h5>
                           <ul className="space-y-3">
-                            {recommendation.travelTips.slice(0, 3).map((tip:string, index:number) => (
+                            {recommendation.travelTips?.slice(0, 3)?.map((tip:string, index:number) => (
                               <li key={index} className="flex items-start">
                                 <svg className="text-primary w-5 h-5 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -549,7 +562,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                         <CardContent className="p-5">
                           <h5 className="text-lg font-medium mb-4">Getting Around</h5>
                           <ul className="space-y-3">
-                            {recommendation.travelTips.slice(3, 6).map((tip:string, index:number) => (
+                            {recommendation.travelTips?.slice(3, 6)?.map((tip:string, index:number) => (
                               <li key={index} className="flex items-start">
                                 <svg className="text-primary w-5 h-5 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -565,7 +578,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                         <CardContent className="p-5">
                           <h5 className="text-lg font-medium mb-4">Safety & Health</h5>
                           <ul className="space-y-3">
-                            {recommendation.travelTips.slice(6).map((tip:string, index:number) => (
+                            {recommendation.travelTips?.slice(6)?.map((tip:string, index:number) => (
                               <li key={index} className="flex items-start">
                                 <svg className="text-primary w-5 h-5 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -581,7 +594,7 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                 </Tabs>
                 
                 <div className="flex justify-center mt-12 gap-x-4">
-                  <Button variant="outlined" sx={{textTransform: 'none'}} className="flex items-center">
+                  <Button variant="outlined" sx={{textTransform: 'none'}} className="flex items-center" onClick={handleSave}>
                     <Save className="mr-2 h-4 w-4" />
                     Save Plan
                   </Button>

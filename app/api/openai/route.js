@@ -388,7 +388,8 @@ export async function POST(req) {
   try {
     const data = await generateTravelRecommendation(preferences);
     const extractedKeywords = extractImageKeywords(data);
-    console.log('sending images request...')
+    console.log('sending images request...', data)
+    console.log(extractedKeywords)
     const images = await getImages(extractedKeywords);
     const result = insertImageKeywords(data, images);
     return NextResponse.json({result}, {status: 200})
@@ -454,9 +455,10 @@ async function getImages(images) {
   async function fetchImage(keyword) {
     try {
       const response = await fetch(
-        `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype:bitmap ${keyword}&gsrnamespace=6&prop=imageinfo&iiprop=url|user|extmetadata&format=json&origin=*`
+        `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype:bitmap${keyword}&gsrnamespace=6&prop=imageinfo&iiprop=url|user|extmetadata&format=json&origin=*`
       );
       const data = await response.json();
+      console.log('image data', data);
       if (data.query && data.query.pages) {
         for (let page of Object.values(data.query.pages)) {
           const imageInfo = page.imageinfo?.[0];

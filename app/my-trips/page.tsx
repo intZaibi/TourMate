@@ -4,9 +4,10 @@ import MyTrip from '@/components/layout/MyTrips'
 import { Card, Select, Button, MenuItem } from "@mui/material";
 import {Header} from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { apiRequest } from "@/components/hooks/use-auth";
 
 interface Trip {
-  id: string;
+  _id: string;
   destination: string;
   startDate: string;
   endDate: string;
@@ -15,21 +16,27 @@ interface Trip {
 }
 
 export default function MyTrips() {
-  const [trips, setTrips] = useState<Trip[]>([]);
+  // const [trips, setTrips] = useState<Trip[]>([]);
+  const [trips, setTrips] = useState([]);
   const [filter, setFilter] = useState("all");
+  console.log(trips)
 
   useEffect(() => {
-    // TODO: Fetch trips from API
+    (async function fetchTrips() {
+      const res = await apiRequest('GET', '/api/my-trips');
+      const result = await res.json();
+      setTrips(result.trips);
+    })();
   }, []);
 
-  const filteredTrips = trips.filter(trip => 
-    filter === "all" || trip.type === filter
-  );
+  // const filteredTrips = trips.filter(trip => 
+  //   filter === "all" || trip.type === filter
+  // );
 
   return (
     <div>
       <Header/>
-      <MyTrip/>
+      <MyTrip trips={trips}/>
       <Footer/>
     </div>
   );

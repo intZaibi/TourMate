@@ -1,15 +1,13 @@
+import { connectDB } from '@/controllers/utils/utils';
 import mongoose from 'mongoose';
+
+await connectDB(process.env.DB_URL || 'mongodb://127.0.0.1:27017/test');
 
 const SignUpSchema = new mongoose.Schema({
   username: {type: String, required: true},
-  email: {type: String, required: true},
+  email: {type: String, required: true, unique: true, lowercase: true, trim: true},
   password: {type: String, required: true},
   createdAt: {type: Date, default: Date.now}
 });
-const SignInSchema = new mongoose.Schema({
-  username: {type: String, required: true},
-  password: {type: String, required: true}
-});
 
-export const SignUp = mongoose.model("SignUp", SignUpSchema);
-export const SignIn = mongoose.model("SignIn", SignInSchema);
+export const Users = mongoose.models.User || mongoose.model("User", SignUpSchema);

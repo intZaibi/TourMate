@@ -33,8 +33,11 @@ export default async function generateTravelRecommendation(preferences: TravelPr
       "destination": string,
       "overview": string,
       "matchPercentage": number (between 80-98),
+      "tripDuration": number (same as provided),
+      "travelStyle": string,
+      "approximateTotalCost": number (in PKR),
       "bestTimeToVisit": string,
-      "avgDailyCost": string,
+      "avgDailyCost": string (in PKR),
       "language": string,
       "currency": string,
       "destinationImageKeyword": string (a precise keyword for image from common.wikimedia.org for the destination),
@@ -57,7 +60,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
         {
           "name": string,
           "type": string,
-          "priceRange": string,
+          "priceRange": string (in PKR),
           "description": string
           "imageKeyword": string (optional, a precise keyword for image from common.wikimedia.org for the accommodation)
         }
@@ -71,14 +74,14 @@ export default async function generateTravelRecommendation(preferences: TravelPr
           "imageKeyword": string (optional, a precise keyword for image from common.wikimedia.org for the restaurant or food)
         }
       ],
-      "budget": {
-        "accommodation": number,
-        "food": number,
-        "activities": number,
-        "transportation": number,
-        "shopping": number,
-        "total": number,
-        "perDay": number
+      "budget" (in PKR): {
+        "accommodation": number (in PKR),
+        "food": number (in PKR),
+        "activities": number (in PKR),
+        "transportation": number (in PKR),
+        "shopping": number (in PKR),
+        "total": number (in PKR),
+        "perDay": number (in PKR)
       },
       "travelTips": string[],
       "weather": {
