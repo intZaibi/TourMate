@@ -36,8 +36,23 @@ export async function GET(req:Request) {
     console.log(trips)
     return NextResponse.json({trips}, {status:200});
   } catch (error) {
-    console.log('error finding trip:', error)
-    return NextResponse.json({error}, {status: 500});
+    if (error instanceof Error) {
+      console.log('error finding trip:', error)
+      return NextResponse.json({error: error?.message}, {status: 404});
+    }
+  }
+}
+
+export async function DELETE(req:Request, res:Response) {
+  const {_id} = await req.json();
+
+  try {
+    await Trip.deleteOne({_id});
+    const trips = await Trip.find();
+    return NextResponse.json({trips}, {status : 200})
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json({error}, {status: 500})
   }
 }
 

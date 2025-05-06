@@ -1,43 +1,50 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import MyTrip from '@/components/layout/MyTrips'
-import { Card, Select, Button, MenuItem } from "@mui/material";
 import {Header} from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { apiRequest } from "@/components/hooks/use-auth";
-
-interface Trip {
-  _id: string;
-  destination: string;
-  startDate: string;
-  endDate: string;
-  status: "booked" | "completed" | "upcoming";
-  type: string;
-}
+import { useQuery } from "@tanstack/react-query";
+import TripsSkeleton from "@/components/layout/TripsSkeleton";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function MyTrips() {
-  // const [trips, setTrips] = useState<Trip[]>([]);
-  const [trips, setTrips] = useState([]);
-  const [filter, setFilter] = useState("all");
-  console.log(trips)
-
-  useEffect(() => {
-    (async function fetchTrips() {
+  const router = useRouter();
+  const { data: trips, error, isLoading, } = useQuery({
+    queryKey: ["my-trips"],
+    queryFn: async () => {
       const res = await apiRequest('GET', '/api/my-trips');
-      const result = await res.json();
-      setTrips(result.trips);
-    })();
-  }, []);
+      if (!res.ok) {
+        const text = (await res.text()) || res.statusText;
+        throw new Error(`${res.status}: ${text}`);
+      }
+      return await res.json();
+    },
+    staleTime: 1000 * 60 * 5,
+  });
 
-  // const filteredTrips = trips.filter(trip => 
-  //   filter === "all" || trip.type === filter
-  // );
+  useEffect(()=>{
+    if (error) {
+      console.log(error)
+      toast.error(error.message);
+    if (error?.message.includes('User')) {
+        router.push('/auth')
+      }
+    }
+  }, [error])
 
   return (
-    <div>
+    <>
+      <Toaster/>
       <Header/>
-      <MyTrip trips={trips}/>
+      <div className="min-h-[80vh]">
+        {isLoading ? <TripsSkeleton/> : trips?.trips?.length > 0 ? <MyTrip trips={trips.trips}/> : 
+        <div className="flex justify-center items-center h-[80vh]">
+          <h1 className="text-3xl">{error?.message || 'No trip found!'}</h1>
+        </div>}
+      </div>
       <Footer/>
-    </div>
+    </>
   );
 }

@@ -1,6 +1,12 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import TripDetailsComponent from "@/components/layout/TripDetailsComponent";
 import React, { useState } from "react";
+import { Button } from "@mui/material";
+import { ArrowRightIcon, Trash2 } from "lucide-react";
+import { apiRequest } from "../hooks/use-auth";
+import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+import { getQueryClient } from "@/controllers/utils/getQueryClient";
 
 export default function MyTrips({trips}:any) {
   const [clickedCard, setClickedCard] = useState(null)
@@ -63,16 +69,30 @@ export default function MyTrips({trips}:any) {
     
     return (numeric / 100).toLocaleString('en-US');
   };
-  
-  console.log('trips:',clickedCard)
+
+  const queryClient = getQueryClient();
+
+  const tripMutation = useMutation({
+    mutationFn: async (_id: string) => {
+      const res = await apiRequest("DELETE", "api/my-trips", _id);
+      return await res.json();
+    },
+    onSuccess: (trips) => {
+      queryClient.setQueryData(["my-trips"], trips);
+      toast.success(`Deletion successful!`);
+    },
+    onError: (error: Error) => {
+      console.log(error);
+      toast.error(`Deletion failed!`);
+    },
+  });
+
   return (
-    <div className="flex flex-wrap min-h-[70vh]">
-      {!clickedCard ? !trips ? <Skeleton/>:
-       trips?.map((trip:any, key:any) => (
+    !clickedCard ? <div className="flex flex-wrap min-h-[70vh]">
+      {trips?.map((trip:any, key:any) => (
         <div
           key={key}
-          onClick={()=>setClickedCard(trip.recommendation[0])}
-          className="max-w-md mx-6 my-7 h-[33rem] bg-white rounded-xl shadow-md overflow-hidden hover:scale-[102%] cursor-pointer transition duration-250"
+          className="max-w-md mx-6 my-7 h-[33rem] bg-white rounded-xl shadow-md overflow-hidden hover:scale-[102%] transition duration-250"
         >
           <div className="relative h-40">
             <img
@@ -82,7 +102,10 @@ export default function MyTrips({trips}:any) {
             />
           </div>
           <div className="p-4">
-            <h2 className="text-xl font-bold mb-2">{trip.recommendation[0].destination}</h2>
+            <div className="flex justify-between">
+              <h2 className="text-xl font-bold mb-2">{trip.recommendation[0].destination}</h2>
+          <Button size="small" sx={{textTransform:"none"}} color="black" onClick={()=>setClickedCard(trip.recommendation[0])}>Expand <ArrowRightIcon size={20}/></Button>
+            </div>
             <p className="text-gray-700 mb-4 line-clamp-2">{trip.recommendation[0].overview}</p>
 
             <div className="mb-4">
@@ -118,14 +141,16 @@ export default function MyTrips({trips}:any) {
               <span className="text-black font-semibold">{trip.recommendation[0].currency}</span>
             </div>
 
-            <div className="text-gray-400 text-sm flex items-center gap-1">
+            <div className="text-gray-400 text-sm flex justify-between items-center gap-1">
               <span>🕒 Saved {new Date().toLocaleDateString()}</span>
+              <Button onClick={()=>tripMutation.mutate(trip._id)}>
+                <Trash2 color="#FF0000" size={18}/>
+              </Button>
             </div>
           </div>
         </div>
-      )):
+      ))}
+    </div>:
       <TripDetailsComponent recommendation={clickedCard}/>
-      }
-    </div>
   );
 }

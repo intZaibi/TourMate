@@ -1,7 +1,7 @@
 export default function ContactForm() {
   return (
     <div className="min-h-[80vh] flex items-center justify-center bg-white px-4">
-      <form className="w-full max-w-md bg-white shadow-md rounded-lg p-8 border border-primary">
+      <form className="w-full max-w-md bg-white shadow-md rounded-lg p-8 border border-black">
         <h2 className="text-2xl font-bold text-primary mb-6 text-center">Contact Us</h2>
 
         <div className="mb-4">
