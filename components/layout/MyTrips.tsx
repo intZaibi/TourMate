@@ -1,7 +1,9 @@
-import { Skeleton } from "@mui/material";
-import React from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import TripDetailsComponent from "@/components/layout/TripDetailsComponent";
+import React, { useState } from "react";
 
 export default function MyTrips({trips}:any) {
+  const [clickedCard, setClickedCard] = useState(null)
   const mytrips = [
     {
       destination: "Islamabad",
@@ -62,14 +64,15 @@ export default function MyTrips({trips}:any) {
     return (numeric / 100).toLocaleString('en-US');
   };
   
-  // console.log('trips:',trips)
+  console.log('trips:',clickedCard)
   return (
-    <div className="flex flex-wrap min-h-[80vh]">
-      {!trips ? <Skeleton/>:
+    <div className="flex flex-wrap min-h-[70vh]">
+      {!clickedCard ? !trips ? <Skeleton/>:
        trips?.map((trip:any, key:any) => (
         <div
           key={key}
-          className="max-w-md mx-6 my-7 bg-white rounded-xl shadow-md overflow-hidden"
+          onClick={()=>setClickedCard(trip.recommendation[0])}
+          className="max-w-md mx-6 my-7 h-[33rem] bg-white rounded-xl shadow-md overflow-hidden hover:scale-[102%] cursor-pointer transition duration-250"
         >
           <div className="relative h-40">
             <img
@@ -120,7 +123,9 @@ export default function MyTrips({trips}:any) {
             </div>
           </div>
         </div>
-      ))}
+      )):
+      <TripDetailsComponent recommendation={clickedCard}/>
+      }
     </div>
   );
 }
