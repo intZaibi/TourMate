@@ -21,7 +21,7 @@ export function Header({user, logoutMutation}: any) {
           <Link href="/recommendations" className="font-medium hover:text-primary transition">Recommendations</Link>
           <Link href="/my-trips" className="font-medium hover:text-primary transition">My Trips</Link>
           {/* <Link href="/explore" className="font-medium hover:text-primary transition">Explore</Link> */}
-          <Link href="/help" className="font-medium hover:text-primary transition">Contact Us</Link>
+          <Link href="/contact" className="font-medium hover:text-primary transition">Contact Us</Link>
         </nav>
         
         <div className="flex items-center gap-2">
