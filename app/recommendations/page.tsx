@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { PreferencesForm } from "@/components/layout/PreferencesForm";
 import { RecommendationsSection } from "@/components/layout/RecommendationsSection";
-import { TravelPreference, TravelRecommendation } from "@/interfaces/openaiSchemas";
+import { TravelPreference, TravelRecommendation } from "@/interfaces/OpenaiSchemas";
 import { useState } from "react";
 
 const recommendation = {

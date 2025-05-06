@@ -104,7 +104,7 @@ export default function MyTrips({trips}:any) {
           <div className="p-4">
             <div className="flex justify-between">
               <h2 className="text-xl font-bold mb-2">{trip.recommendation[0].destination}</h2>
-          <Button size="small" sx={{textTransform:"none"}} color="black" onClick={()=>setClickedCard(trip.recommendation[0])}>Expand <ArrowRightIcon size={20}/></Button>
+          <Button size="small" sx={{textTransform:"none"}} onClick={()=>setClickedCard(trip.recommendation[0])}>Expand <ArrowRightIcon size={20}/></Button>
             </div>
             <p className="text-gray-700 mb-4 line-clamp-2">{trip.recommendation[0].overview}</p>
 

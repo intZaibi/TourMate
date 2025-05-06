@@ -43,7 +43,7 @@ export async function GET(req:Request) {
   }
 }
 
-export async function DELETE(req:Request, res:Response) {
+export async function DELETE(req:Request) {
   const {_id} = await req.json();
 
   try {
