@@ -455,7 +455,7 @@ async function getImages(images) {
   async function fetchImage(keyword) {
     try {
       const response = await fetch(
-        `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype:bitmap${keyword}&gsrnamespace=6&prop=imageinfo&iiprop=url|user|extmetadata&format=json&origin=*`
+        `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype:bitmap ${keyword}&gsrnamespace=6&prop=imageinfo&iiprop=url|user|extmetadata&format=json`
       );
       const data = await response.json();
       console.log('image data', data);
