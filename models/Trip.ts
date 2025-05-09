@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-mongoose.connect('mongodb://127.0.0.1:27017/test');
+mongoose.connect(process.env.DB_URL || 'mongodb://127.0.0.1:27017/test');
 
 const TripSchema = new mongoose.Schema({
   recommendation: [{
