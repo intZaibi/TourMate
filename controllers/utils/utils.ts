@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export const connectDB = async (DB_URL: string)=>{
   if (mongoose.connection.readyState >= 1) return;
   try {
-    await mongoose.connect(DB_URL || 'mongodb://127.0.0.1:27017/test');
+    await mongoose.connect(process.env.DB_URL || '');
     console.log('DB connected...');
   } catch (error) {
     console.log('error connecting DB:', error);
