@@ -54,11 +54,11 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Popular Destinations</h4>
             <ul className="space-y-2">
-              <li><Link href="#" className="text-gray-400 hover:text-white transition">Paris, France</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition">Tokyo, Japan</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition">New York, USA</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition">Rome, Italy</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition">Bali, Indonesia</Link></li>
+              <li><Link href="/recommendations" className="text-gray-400 hover:text-white transition">Islamabad</Link></li>
+              <li><Link href="/recommendations" className="text-gray-400 hover:text-white transition">Lahore</Link></li>
+              <li><Link href="/recommendations" className="text-gray-400 hover:text-white transition">Karachi</Link></li>
+              <li><Link href="/recommendations" className="text-gray-400 hover:text-white transition">Naran Kaghan</Link></li>
+              <li><Link href="/recommendations" className="text-gray-400 hover:text-white transition">Multan</Link></li>
             </ul>
           </div>
           

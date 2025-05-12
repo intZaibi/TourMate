@@ -300,7 +300,7 @@ export function PreferencesForm({ popularDestination }: any) {
                             <Slider
                               value={[field.value]}
                               min={10000}
-                              max={500000}
+                              max={100000}
                               step={1000}
                               onChange={(event, value) => handleBudgetChange(event, value)}
                               color="primary"

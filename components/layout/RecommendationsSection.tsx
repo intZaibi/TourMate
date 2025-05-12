@@ -159,18 +159,18 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                 {day.activities?.map((activity:any, actIndex:number) => (
                                   <li key={actIndex} className="flex">
                                     <div className="text-neutral-500 w-16 flex-shrink-0">{activity.time}</div>
-                                    <div className="flex-grow">
+                                    <div className="flex-grow flex flex-col">
                                       <div className="font-medium">{activity.title}</div>
                                       <p className="text-sm text-neutral-500">{activity.description}</p>
-                                      {activity.imageKeyword && (
-                                        <div className="mt-2 rounded-md overflow-hidden h-32 w-full md:w-3/4">
-                                          <img 
-                                            src={activity.imageKeyword} 
-                                            alt={activity.title}
-                                            className="h-full w-full object-cover"
-                                          />
+                                      <div className="mt-2 rounded-md overflow-hidden h-70 w-full md:w-3/4">
+                                        {activity.imageKeyword && (
+                                            <img 
+                                              src={activity.imageKeyword} 
+                                              alt={activity.title}
+                                              className="h-full w-full object-cover"
+                                            />
+                                          )}
                                         </div>
-                                      )}
                                     </div>
                                   </li>
                                 ))}
@@ -350,17 +350,17 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                     <h4 className="text-xl font-semibold mb-6">Recommended Accommodations</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {recommendation.accommodations?.map((accommodation:any, index:number) => (
-                        <Card key={index}>
-                          {accommodation.imageKeyword && (
-                            <div className="relative h-40 w-full overflow-hidden">
-                              <img 
-                                src={accommodation.imageKeyword} 
-                                alt={accommodation.name}
-                                className="w-full h-full object-cover"
-                              />
+                        <Card key={index} className="flex flex-col">
+                          <div className="relative h-80 w-full rounded-t-lg overflow-hidden">
+                            {accommodation.imageKeyword && (
+                                <img 
+                                  src={accommodation.imageKeyword} 
+                                  alt={accommodation.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
                             </div>
-                          )}
-                          <CardContent className="p-5">
+                          <CardContent className="p-5 self-end">
                             <h5 className="text-lg font-semibold mb-1">{accommodation.name}</h5>
                             <div className="flex items-center mb-3">
                               <div className="bg-neutral-100 text-neutral-800 text-xs font-medium px-2.5 py-0.5 rounded-full mr-2">
@@ -380,17 +380,17 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                     <h4 className="text-xl font-semibold mb-6">Recommended Dining Options</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {recommendation.dining?.map((restaurant:any, index:number) => (
-                        <Card key={index}>
-                          {restaurant.imageKeyword && (
-                            <div className="relative h-40 w-full overflow-hidden">
-                              <img 
-                                src={restaurant.imageKeyword} 
-                                alt={restaurant.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          )}
-                          <CardContent className="p-5">
+                        <Card key={index} className="flex flex-col">
+                          <div className="relative h-80 w-full overflow-hidden">
+                            {restaurant.imageKeyword && (
+                                <img 
+                                  src={restaurant.imageKeyword} 
+                                  alt={restaurant.name}
+                                  className="w-full h-full object-cover rounded-t-lg"
+                                />
+                              )}
+                          </div>
+                          <CardContent className="p-5 self-end">
                             <h5 className="text-lg font-semibold mb-1">{restaurant.name}</h5>
                             <div className="flex items-center mb-3">
                               <div className="bg-neutral-100 text-neutral-800 text-xs font-medium px-2.5 py-0.5 rounded-full mr-2">

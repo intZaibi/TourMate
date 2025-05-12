@@ -54,11 +54,11 @@ export function RecommendationsFooter({setPopularDestination}:any) {
           <div>
             <h4 className="text-lg font-semibold mb-4">Popular Destinations</h4>
             <ul className="space-y-2">
-              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("Paris, France")}>Paris, France</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("Tokyo, Japan")}>Tokyo, Japan</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("New York, USA")}>New York, USA</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("Rome, Italy")}>Rome, Italy</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("Bali, Indonesia")}>Bali, Indonesia</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("Islamabad")}>Islamabad</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("Lahore")}>Lahore</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("Karachi")}>Karachi</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("Naran Kaghan")}>Naran Kaghan</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition"onClick={()=>setPopularDestination("Multan")}>Multan</Link></li>
             </ul>
           </div>
           
