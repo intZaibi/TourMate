@@ -1,9 +1,8 @@
 'use client'
 import { useAuth } from "@/components/hooks/use-auth";
-import Footer from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { RecommendationsFooter } from "@/components/layout/RecommendationsFooter";
 import { PreferencesForm } from "@/components/layout/PreferencesForm";
-import { RecommendationsSection } from "@/components/layout/RecommendationsSection";
 import { TravelPreference, TravelRecommendation } from "@/interfaces/OpenaiSchemas";
 import { useState } from "react";
 
@@ -242,12 +241,13 @@ const recommendation = {
 }
 
 export default function Recommendations() {
-    useAuth();
+  const [popularDestination, setPopularDestination] = useState('')
+  const { user } = useAuth();
   return (
     <>
-      <Header/>
-      <PreferencesForm /> 
-      <Footer/>
+      <Header user={user}/>
+      <PreferencesForm popularDestination={popularDestination}/> 
+      <RecommendationsFooter setPopularDestination={setPopularDestination}/>
     </>
   )
 } 

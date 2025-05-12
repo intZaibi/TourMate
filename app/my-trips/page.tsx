@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import MyTrip from '@/components/layout/MyTrips'
 import {Header} from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { apiRequest } from "@/components/hooks/use-auth";
+import { apiRequest, useAuth } from "@/components/hooks/use-auth";
 import { useQuery } from "@tanstack/react-query";
 import TripsSkeleton from "@/components/layout/TripsSkeleton";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 
 export default function MyTrips() {
   const router = useRouter();
+  const { user } = useAuth();
   const { data: trips, error, isLoading, } = useQuery({
     queryKey: ["my-trips"],
     queryFn: async () => {
@@ -37,7 +38,7 @@ export default function MyTrips() {
   return (
     <>
       <Toaster/>
-      <Header/>
+      <Header user={user}/>
       <div className="min-h-[80vh]">
         {isLoading ? <TripsSkeleton/> : trips?.trips?.length > 0 ? <MyTrip trips={trips.trips}/> : 
         <div className="flex justify-center items-center h-[80vh]">
