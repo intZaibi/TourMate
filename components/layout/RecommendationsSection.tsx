@@ -162,15 +162,15 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                                     <div className="flex-grow flex flex-col">
                                       <div className="font-medium">{activity.title}</div>
                                       <p className="text-sm text-neutral-500">{activity.description}</p>
-                                      <div className="mt-2 rounded-md overflow-hidden h-70 w-full md:w-3/4">
                                         {activity.imageKeyword && (
+                                      <div className="mt-2 rounded-md overflow-hidden h-70 w-full md:w-3/4">
                                             <img 
                                               src={activity.imageKeyword} 
                                               alt={activity.title}
                                               className="h-full w-full object-cover"
                                             />
-                                          )}
                                         </div>
+                                          )}
                                     </div>
                                   </li>
                                 ))}
@@ -351,15 +351,15 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {recommendation.accommodations?.map((accommodation:any, index:number) => (
                         <Card key={index} className="flex flex-col">
-                          <div className="relative h-80 w-full rounded-t-lg overflow-hidden">
                             {accommodation.imageKeyword && (
+                          <div className="relative h-80 w-full rounded-t-lg overflow-hidden">
                                 <img 
                                   src={accommodation.imageKeyword} 
                                   alt={accommodation.name}
                                   className="w-full h-full object-cover"
                                 />
-                              )}
                             </div>
+                              )}
                           <CardContent className="p-5 self-end">
                             <h5 className="text-lg font-semibold mb-1">{accommodation.name}</h5>
                             <div className="flex items-center mb-3">
@@ -381,15 +381,15 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {recommendation.dining?.map((restaurant:any, index:number) => (
                         <Card key={index} className="flex flex-col">
-                          <div className="relative h-80 w-full overflow-hidden">
                             {restaurant.imageKeyword && (
+                          <div className="relative h-80 w-full overflow-hidden">
                                 <img 
                                   src={restaurant.imageKeyword} 
                                   alt={restaurant.name}
                                   className="w-full h-full object-cover rounded-t-lg"
                                 />
-                              )}
                           </div>
+                              )}
                           <CardContent className="p-5 self-end">
                             <h5 className="text-lg font-semibold mb-1">{restaurant.name}</h5>
                             <div className="flex items-center mb-3">

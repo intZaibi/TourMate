@@ -1,11 +1,8 @@
 import { TravelPreference, TravelRecommendation } from "@/interfaces/OpenaiSchemas";
 import OpenAI from "openai";
 
-// the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({
   baseURL: "https://models.github.ai/inference",
-  // baseURL: "https://openrouter.ai/api/v1",
-  // apiKey: process.env.OPENAI_API_KEY
   apiKey: process.env.GITHUB_KEY
 });
 export default async function generateTravelRecommendation(preferences: TravelPreference): Promise<TravelRecommendation> {
@@ -120,9 +117,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
     console.log('resp:',response.choices[0].message.content)
     if (typeof response.choices[0].message.content === "string") {  // checking if AI has sent a response or not
       
-      // if (response.choices[0].message.content.includes("```")) {  // checking if AI has the correct response or not
       if (response.choices[0].message.content) {
-        // const arr = response.choices[0].message.content.split('```')[1].split('json')[1]
         const result = await JSON.parse(response.choices[0].message.content);
         return result;
       } else {  // if unexpected response
