@@ -9,7 +9,7 @@ interface RecommendationsSectionProps {
   recommendation: any | null;
 }
 
-const reviewersImages:string[] = ["/reviewer1.jpg","/reviewer6.jpg","/reviewer2.jpg","/reviewer5.jpg","/reviewer3.jpg","/reviewer4.jpg",]
+const reviewersImages:string[] = ["/reviewer1.jpg","/reviewer2.jpg","/reviewer3.jpg","/reviewer4.jpg","/reviewer5.jpg","/reviewer6.jpg"]
 
 export default function RecommendationsSection({ recommendation }: RecommendationsSectionProps) {
   const [expandedDays, setExpandedDays] = useState(1);
@@ -599,18 +599,18 @@ export default function RecommendationsSection({ recommendation }: Recommendatio
                 <h4 className="text-xl font-semibold mb-6">Reviews</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {recommendation.reviews?.map((review:any, index:number) => (
-                    <Card key={index}>
+                    <Card key={index} className="flex items-center">
                       {(
-                        <div className="relative h-80 w-full overflow-hidden">
+                        <div className="relative overflow-hidden h-40 w-80 pl-2 flex justify-center items-center">
                           <img 
-                            src={reviewersImages[index]} 
-                            alt={`${review.name}'s image`}
-                            className="w-full h-full object-cover"
+                            src={`/${review.reviewerGender}/${reviewersImages[index]}`} 
+                            alt={`${review.reviewerName}'s image`}
+                            className="h-32 w-32 rounded-full object-cover"
                           />
                         </div>
                       )}
                       <CardContent className="p-5">
-                        <h5 className="text-lg font-semibold mb-1">{review.name}</h5>
+                        <h5 className="text-md font-semibold mb-1">{review.reviewerName}</h5>
                         <div className="flex items-center mb-3">
                           <div className="text-yellow-500 text-sm">
                             {Array.from({ length: 5 }, (_, i) => (
@@ -620,7 +620,7 @@ export default function RecommendationsSection({ recommendation }: Recommendatio
                             ))} {review.rating}
                           </div>
                         </div>
-                        <h5 className="text-md font-semibold mb-1">{review.reviewerName}</h5>
+                        <h5 className="text-lg font-semibold mb-1">{review.name}</h5>
                         <p className="text-neutral-600 text-sm">{review.comment}</p>
                       </CardContent>
                     </Card>
