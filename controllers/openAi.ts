@@ -13,7 +13,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
     Trip Duration: ${preferences.duration} days
     Travel Styles: ${preferences.travelStyles.join(", ")}
     Interests: ${preferences.interests.join(", ")}
-    Budget: $${preferences.budget}
+    Budget: PKR${preferences.budget}
     Additional Information: ${preferences.additionalInfo || "null"}
     
     Create a detailed travel plan with the following information:
@@ -30,6 +30,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
     Return the information in a structured JSON format with the following structure:
     {
       "destination": string,
+      "ratings": number (between 1-5),
       "overview": string,
       "matchPercentage": number (between 80-98),
       "tripDuration": number (same as provided),
@@ -82,6 +83,14 @@ export default async function generateTravelRecommendation(preferences: TravelPr
         "total": number (in PKR),
         "perDay": number (in PKR)
       },
+      "reviews": [
+        {
+          "name": string (destination specific names only),
+          "reviewerName": string,
+          "rating": number (between 1-5),
+          "comment": string,
+        }
+      ],
       "travelTips": string[],
       "weather": {
         "days": [

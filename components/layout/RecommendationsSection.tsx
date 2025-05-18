@@ -3,13 +3,15 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@mui/material";
-import { Edit, PlusCircle, Save, Share2, MapPin, Bed, Utensils, Calculator, Info, MinusCircle } from "lucide-react";
+import { Edit, PlusCircle, Save, Share2, MapPin, Bed, Utensils, Calculator, Info, MinusCircle, MessageCircleCode } from "lucide-react";
 import { apiRequest } from "../hooks/use-auth";
 import toast, { Toaster } from "react-hot-toast";
 
 interface RecommendationsSectionProps {
   recommendation: any | null;
 }
+
+const reviewersImages:string[] = ["/reviewer1.jpg","/reviewer6.jpg","/reviewer2.jpg","/reviewer5.jpg","/reviewer3.jpg","/reviewer4.jpg",]
 
 export function RecommendationsSection({ recommendation }: RecommendationsSectionProps) {
   const [expandedDays, setExpandedDays] = useState(1);
@@ -66,6 +68,13 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                         <span className="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
                           {recommendation.matchPercentage}% Match
                         </span>
+                      </div>
+                      <div className="text-yellow-500 text-sm">
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <span key={i}>
+                            {i < recommendation.ratings ? '★' : '☆'}
+                          </span>
+                        ))} {recommendation.ratings}
                       </div>
                       <p className="text-neutral-600 mb-4">{recommendation.overview}</p>
                       
@@ -136,6 +145,13 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                     >
                       <Info className="h-4 w-4 mr-2" />
                       Travel Tips
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="reviews" 
+                      className={"p-4 rounded-none border-b-2 border-neutral-200  data-[state=active]:border-primary data-[state=inactive]:text-neutral-500 data-[state=active]:text-primary data-[state=active]:bg-white"}
+                    >
+                      <MessageCircleCode className="h-4 w-4 mr-2" />
+                      Reviews
                     </TabsTrigger>
                   </TabsList>
                   
@@ -589,6 +605,40 @@ export function RecommendationsSection({ recommendation }: RecommendationsSectio
                           </ul>
                         </CardContent>
                       </Card>
+                    </div>
+                  </TabsContent>
+
+                  {/* Reviews Content */}
+                  <TabsContent value="reviews" className="mt-6">
+                    <h4 className="text-xl font-semibold mb-6">Reviews</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {recommendation.reviews?.map((review:any, index:number) => (
+                        <Card key={index}>
+                          {(
+                            <div className="relative h-80 w-full overflow-hidden">
+                              <img 
+                                src={reviewersImages[index]} 
+                                alt={`${review.name}'s image`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          )}
+                          <CardContent className="p-5">
+                            <h5 className="text-lg font-semibold mb-1">{review.name}</h5>
+                            <div className="flex items-center mb-3">
+                              <div className="text-yellow-500 text-sm">
+                                {Array.from({ length: 5 }, (_, i) => (
+                                  <span key={i}>
+                                    {i < review.rating ? '★' : '☆'}
+                                  </span>
+                                ))} {review.rating}
+                              </div>
+                            </div>
+                            <h5 className="text-md font-semibold mb-1">{review.reviewerName}</h5>
+                            <p className="text-neutral-600 text-sm">{review.comment}</p>
+                          </CardContent>
+                        </Card>
+                      ))}
                     </div>
                   </TabsContent>
                 </Tabs>

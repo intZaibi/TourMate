@@ -4,6 +4,7 @@ mongoose.connect(process.env.DB_URL || 'mongodb://127.0.0.1:27017/test');
 const TripSchema = new mongoose.Schema({
   recommendation: [{
     destination: String,
+    ratings: Number,
     overview: String,
     matchPercentage: Number,
     tripDuration: Number,
@@ -50,6 +51,14 @@ const TripSchema = new mongoose.Schema({
       perDay: Number,
     },
     travelTips: [String],
+    reviews: [
+        {
+          name: String,
+          reviewerName: String,
+          rating: Number,
+          comment: String,
+        }
+      ],
     weather: {
       days: [{
           day: String,
