@@ -87,6 +87,7 @@ export default async function generateTravelRecommendation(preferences: TravelPr
         {
           "name": string (destination specific names only),
           "reviewerName": string,
+          "reviewerGender": string (male/female),
           "rating": number (between 1-5),
           "comment": string,
         }
