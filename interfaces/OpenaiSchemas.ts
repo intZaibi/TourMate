@@ -6,8 +6,12 @@ export const TravelPreferenceValidationSchema = z.object({
     message: "Destination should not include numbers or special characters."
   }),
   duration: z.number(),
-  travelStyles: z.array(string()),
-  interests: z.array(string()),
+  travelStyles: z.array(z.string()).min(2, {
+    message: "At least two travel styles are required."
+  }),
+  interests: z.array(z.string()).min(2, {
+    message: "At least two interests are required."
+  }),
   budget: z.number(),
   additionalInfo: z.string().optional()
 })
