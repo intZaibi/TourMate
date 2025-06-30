@@ -114,7 +114,6 @@ export function PreferencesForm({ popularDestination }: any) {
                       <div>
                         <InputLabel htmlFor="destination">Destination</InputLabel>
                         <Input
-                          required
                           id="destination"
                           placeholder="City, Country, or Region"
                           {...form.register("destination")}
@@ -129,7 +128,6 @@ export function PreferencesForm({ popularDestination }: any) {
                         <InputLabel htmlFor="duration">Trip Duration</InputLabel>
                         <div className="flex items-center space-x-2">
                           <Input
-                            required
                             id="duration"
                             type="number"
                             min={1}
@@ -160,7 +158,6 @@ export function PreferencesForm({ popularDestination }: any) {
                                 return (
                                   <div key={style.id} className="relative">
                                     <input
-                                      required
                                       type="checkbox"
                                       id={`style-${style.id}`}
                                       className="peer sr-only"
