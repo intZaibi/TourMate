@@ -7,10 +7,10 @@ export const TravelPreferenceValidationSchema = z.object({
   }),
   duration: z.number(),
   travelStyles: z.array(z.string()).min(1, {
-    message: "At least two travel styles are required."
+    message: "At least choose one travel styles is required."
   }),
   interests: z.array(z.string()).min(1, {
-    message: "At least two interests are required."
+    message: "At least choose one interests field."
   }),
   budget: z.number(),
   additionalInfo: z.string().optional()
