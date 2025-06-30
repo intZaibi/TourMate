@@ -114,6 +114,7 @@ export function PreferencesForm({ popularDestination }: any) {
                       <div>
                         <InputLabel htmlFor="destination">Destination</InputLabel>
                         <Input
+                          required
                           id="destination"
                           placeholder="City, Country, or Region"
                           {...form.register("destination")}
@@ -232,7 +233,6 @@ export function PreferencesForm({ popularDestination }: any) {
                                 return (
                                   <div key={interest.id} className="relative">
                                     <input
-                                      required
                                       type="checkbox"
                                       id={`interest-${interest.id}`}
                                       className="peer sr-only"
